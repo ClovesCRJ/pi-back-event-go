@@ -1,5 +1,5 @@
-import { Event } from "src/event/entities/event.entity";
-import { UserPermission } from "src/user_permission/entities/user_permission.entity";
+import { Event } from "../../event/entities/event.entity";
+import { UserPermission } from "../../user_permission/entities/user_permission.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 

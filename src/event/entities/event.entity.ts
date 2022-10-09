@@ -1,10 +1,10 @@
-import { Briefing } from "src/briefing/entities/briefing.entity";
-import { CheckList } from "src/check_list/entities/check_list.entity";
-import { CostList } from "src/cost_list/entities/cost_list.entity";
-import { EventRevenue } from "src/event_revenue/entities/event_revenue.entity";
-import { TicketRevenueList } from "src/ticket_revenue_list/entities/ticket_revenue_list.entity";
-import { User } from "src/user/entities/user.entity";
-import { UserPermission } from "src/user_permission/entities/user_permission.entity";
+import { Briefing } from "../../briefing/entities/briefing.entity";
+import { CheckList } from "../../check_list/entities/check_list.entity";
+import { CostList } from "../../cost_list/entities/cost_list.entity";
+import { EventRevenue } from "../../event_revenue/entities/event_revenue.entity";
+import { TicketRevenueList } from "../../ticket_revenue_list/entities/ticket_revenue_list.entity";
+import { User } from "../../user/entities/user.entity";
+import { UserPermission } from "../../user_permission/entities/user_permission.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 

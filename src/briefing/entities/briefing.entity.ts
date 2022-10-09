@@ -1,8 +1,8 @@
-import { EventBriefing } from "src/event_briefing/entities/event_briefing.entity";
-import { MarketingBriefing } from "src/marketing_briefing/entities/marketing_briefing.entity";
-import { PromotionBriefing } from "src/promotion_briefing/entities/promotion_briefing.entity";
-import { PublicBriefing } from "src/public_briefing/entities/public_briefing.entity";
-import { StrategyBriefing } from "src/strategy_briefing/entities/strategy_briefing.entity";
+import { EventBriefing } from "../../event_briefing/entities/event_briefing.entity";
+import { MarketingBriefing } from "../../marketing_briefing/entities/marketing_briefing.entity";
+import { PromotionBriefing } from "../../promotion_briefing/entities/promotion_briefing.entity";
+import { PublicBriefing } from "../../public_briefing/entities/public_briefing.entity";
+import { StrategyBriefing } from "../../strategy_briefing/entities/strategy_briefing.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 

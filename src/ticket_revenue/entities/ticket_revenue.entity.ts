@@ -1,4 +1,4 @@
-import { TicketRevenueList } from "src/ticket_revenue_list/entities/ticket_revenue_list.entity";
+import { TicketRevenueList } from "../../ticket_revenue_list/entities/ticket_revenue_list.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 

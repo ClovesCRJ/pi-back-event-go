@@ -1,4 +1,4 @@
-import { CheckList } from "src/check_list/entities/check_list.entity";
+import { CheckList } from "../../check_list/entities/check_list.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 

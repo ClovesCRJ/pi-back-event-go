@@ -1,4 +1,4 @@
-import { CostList } from "src/cost_list/entities/cost_list.entity";
+import { CostList } from "../../cost_list/entities/cost_list.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 

@@ -1,4 +1,4 @@
-import { Event } from "src/event/entities/event.entity";
+import { Event } from "../../event/entities/event.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 

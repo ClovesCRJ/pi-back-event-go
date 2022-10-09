@@ -1,5 +1,5 @@
-import { CostItem } from "src/cost_item/entities/cost_item.entity";
-import { Event } from "src/event/entities/event.entity";
+import { CostItem } from "../../cost_item/entities/cost_item.entity";
+import { Event } from "../../event/entities/event.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 

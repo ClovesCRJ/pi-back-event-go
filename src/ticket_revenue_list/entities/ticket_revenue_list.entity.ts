@@ -1,5 +1,5 @@
-import { Event } from "src/event/entities/event.entity";
-import { TicketRevenue } from "src/ticket_revenue/entities/ticket_revenue.entity";
+import { Event } from "../../event/entities/event.entity";
+import { TicketRevenue } from "../../ticket_revenue/entities/ticket_revenue.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 
