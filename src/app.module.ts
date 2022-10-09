@@ -22,15 +22,15 @@ import { TicketRevenueModule } from './ticket_revenue/ticket_revenue.module';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: "postgres",
+      type: process.env.TYPEORM_CONNECTION,
       host: process.env.TYPEORM_HOST,
-      port: Number.parseInt(process.env.TYPEORM_PORT),
+      port: process.env.TYPEORM_PORT,
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
       entities: [__dirname + "/**/entities/*.entity{.js,.ts}"],
       synchronize: true,
-    }),
+    } as TypeOrmModule),
     UserModule,
     EventModule,
     UserPermissionModule,
