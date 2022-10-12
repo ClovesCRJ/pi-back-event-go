@@ -1,15 +1,15 @@
 import { Event } from "../../event/entities/event.entity";
 import { UserPermission } from "../../user_permission/entities/user_permission.entity";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
-import { v4 as uuid } from "uuid";
+import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { hashSync } from "bcrypt";
 
 @Entity("users")
 export class User {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string;
+  first_name: string;
 
   @OneToMany(() => Event, event => event.owner)
   events: Event[];
@@ -18,10 +18,13 @@ export class User {
   user_permissions: UserPermission[];
 
   @Column()
-  surname: string;
+  last_name: string;
 
   @Column()
   email: string;
+
+  @Column()
+  password: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -29,9 +32,11 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  constructor() {
-    if(!this.id) {
-      this.id = uuid();
-    }
+  @DeleteDateColumn()
+  deleted_at: Date;
+
+  @BeforeInsert()
+  hashPassword() {
+    this.password = hashSync(this.password, 10);
   }
 }

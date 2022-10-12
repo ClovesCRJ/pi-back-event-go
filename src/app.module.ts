@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-import { EventModule } from './event/event.module';
-import { UserPermissionModule } from './user_permission/user_permission.module';
-import { BriefingModule } from './briefing/briefing.module';
-import { EventBriefingModule } from './event_briefing/event_briefing.module';
-import { MarketingBriefingModule } from './marketing_briefing/marketing_briefing.module';
-import { PromotionBriefingModule } from './promotion_briefing/promotion_briefing.module';
-import { PublicBriefingModule } from './public_briefing/public_briefing.module';
-import { StrategyBriefingModule } from './strategy_briefing/strategy_briefing.module';
-import { CheckListModule } from './check_list/check_list.module';
-import { CheckItemModule } from './check_item/check_item.module';
-import { CostListModule } from './cost_list/cost_list.module';
-import { CostItemModule } from './cost_item/cost_item.module';
-import { EventRevenueModule } from './event_revenue/event_revenue.module';
-import { TicketRevenueListModule } from './ticket_revenue_list/ticket_revenue_list.module';
-import { TicketRevenueModule } from './ticket_revenue/ticket_revenue.module';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { UserModule } from './app/user/user.module';
+import { EventModule } from './app/event/event.module';
+import { UserPermissionModule } from './app/user_permission/user_permission.module';
+import { BriefingModule } from './app/briefing/briefing.module';
+import { EventBriefingModule } from './app/event_briefing/event_briefing.module';
+import { MarketingBriefingModule } from './app/marketing_briefing/marketing_briefing.module';
+import { PromotionBriefingModule } from './app/promotion_briefing/promotion_briefing.module';
+import { PublicBriefingModule } from './app/public_briefing/public_briefing.module';
+import { StrategyBriefingModule } from './app/strategy_briefing/strategy_briefing.module';
+import { CheckListModule } from './app/check_list/check_list.module';
+import { CheckItemModule } from './app/check_item/check_item.module';
+import { CostListModule } from './app/cost_list/cost_list.module';
+import { CostItemModule } from './app/cost_item/cost_item.module';
+import { EventRevenueModule } from './app/event_revenue/event_revenue.module';
+import { TicketRevenueListModule } from './app/ticket_revenue_list/ticket_revenue_list.module';
+import { TicketRevenueModule } from './app/ticket_revenue/ticket_revenue.module';
 
 @Module({
   imports: [
@@ -30,7 +30,7 @@ import { TicketRevenueModule } from './ticket_revenue/ticket_revenue.module';
       database: process.env.TYPEORM_DATABASE,
       entities: [__dirname + "/**/entities/*.entity{.js,.ts}"],
       synchronize: true,
-    } as TypeOrmModule),
+    } as TypeOrmModuleOptions),
     UserModule,
     EventModule,
     UserPermissionModule,
