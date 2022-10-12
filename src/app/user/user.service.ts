@@ -27,23 +27,26 @@ export class UserService {
 
   async findOneOrFail(options: FindOneOptions<User>) {
     try {
-      return await this.usersRepository.findOneOrFail({
-        ...options, 
-        select: ['id', 'email', 'first_name', 'last_name', 'created_at', 'deleted_at', 'updated_at']
-      });
+      return await this.usersRepository.findOneOrFail(options);
     } catch (error) {
       throw new NotFoundException(MessagesUtils.USER_NOT_FOUND);
     }
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = await this.findOneOrFail({ where: { id } });
+    const user = await this.findOneOrFail({
+      where: { id },
+      select: ['id', 'email', 'first_name', 'last_name', 'created_at', 'updated_at'],
+    });
     this.usersRepository.merge(user, updateUserDto);
     return await this.usersRepository.save(user);
   }
 
   async remove(id: string) {
-    await this.findOneOrFail({ where: { id } });
+    await this.findOneOrFail({
+      where: { id },
+      select: ['id', 'email', 'first_name', 'last_name', 'created_at', 'updated_at'],
+    });
     return await this.usersRepository.softDelete({ id });
   }
 }
