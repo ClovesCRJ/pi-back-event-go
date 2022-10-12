@@ -18,6 +18,10 @@ export class PublicBriefingService {
     return await this.publicBriefingRepository.save(publicBriefing);
   }
 
+  async delete(id: string) {
+    return await this.publicBriefingRepository.delete({ id });
+  }
+
   // findAll() {
   //   return `This action returns all publicBriefing`;
   // }
@@ -28,9 +32,5 @@ export class PublicBriefingService {
 
   // update(id: number, updatePublicBriefingDto: UpdatePublicBriefingDto) {
   //   return `This action updates a #${id} publicBriefing`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} publicBriefing`;
   // }
 }

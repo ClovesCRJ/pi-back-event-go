@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MessagesUtils } from 'src/utils/messages.utils';
+import { FindOneOptions, Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
 import { Event } from './entities/event.entity';
-// import { UpdateEventDto } from './dto/update-event.dto';
 
 @Injectable()
 export class EventService {
@@ -17,19 +17,26 @@ export class EventService {
     return await this.eventRepository.save(event);
   }
 
-  findAll() {
-    return `This action returns all event`;
+  async findAllBelong(owner_id: string) {
+    try {
+      return await this.eventRepository.find({
+        relations: ["briefing", "briefing.event_briefing"],
+        where: { owner_id },
+      });
+    } catch (error) {
+      return new InternalServerErrorException(error.message);
+    }
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} event`;
-  // }
+  async findOneBelong(options: FindOneOptions<Event>) {
+    try {
+      return await this.eventRepository.findOneOrFail(options);
+    } catch (error) {
+      throw new NotFoundException(MessagesUtils.EVENT_NOT_FOUND);
+    }
+  }
 
-  // update(id: number, updateEventDto: UpdateEventDto) {
-  //   return `This action updates a #${id} event`;
-  // }
-
-  remove(id: string) {
-    return `This action removes a #${id} event`;
+  async delete(id: string) {
+    return await this.eventRepository.delete({ id });
   }
 }

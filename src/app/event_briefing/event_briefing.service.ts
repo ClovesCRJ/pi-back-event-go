@@ -17,6 +17,10 @@ export class EventBriefingService {
     return await this.eventBriefingRepository.save(eventBriefing);
   }
 
+  async delete(id: string) {
+    return await this.eventBriefingRepository.delete({ id });
+  }
+
   // findAll() {
   //   return `This action returns all eventBriefing`;
   // }
@@ -27,9 +31,5 @@ export class EventBriefingService {
 
   // update(id: number, updateEventBriefingDto: UpdateEventBriefingDto) {
   //   return `This action updates a #${id} eventBriefing`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} eventBriefing`;
   // }
 }

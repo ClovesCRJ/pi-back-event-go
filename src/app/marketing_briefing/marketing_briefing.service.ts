@@ -17,6 +17,10 @@ export class MarketingBriefingService {
     return await this.marketingBriefingRepository.save(marketingBriefing);
   }
 
+  async delete(id: string) {
+    return await this.marketingBriefingRepository.delete({ id });
+  }
+
   // findAll() {
   //   return `This action returns all marketingBriefing`;
   // }
@@ -27,9 +31,5 @@ export class MarketingBriefingService {
 
   // update(id: number, updateMarketingBriefingDto: UpdateMarketingBriefingDto) {
   //   return `This action updates a #${id} marketingBriefing`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} marketingBriefing`;
   // }
 }

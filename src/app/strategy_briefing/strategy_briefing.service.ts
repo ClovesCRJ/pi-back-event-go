@@ -17,6 +17,10 @@ export class StrategyBriefingService {
     return await this.strategyBriefingRepository.save(strategyBriefing);
   }
 
+  async delete(id: string) {
+    return await this.strategyBriefingRepository.delete({ id });
+  }
+
   // findAll() {
   //   return `This action returns all strategyBriefing`;
   // }
@@ -27,9 +31,5 @@ export class StrategyBriefingService {
 
   // update(id: number, updateStrategyBriefingDto: UpdateStrategyBriefingDto) {
   //   return `This action updates a #${id} strategyBriefing`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} strategyBriefing`;
   // }
 }

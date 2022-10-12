@@ -15,4 +15,8 @@ export class BriefingService {
     const briefing = await this.briefingRepository.create(createBriefingDto);
     return await this.briefingRepository.save(briefing);
   }
+
+  async delete(id: string) {
+    return await this.briefingRepository.delete({ id });
+  }
 }
