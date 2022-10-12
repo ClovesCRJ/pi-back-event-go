@@ -1,6 +1,6 @@
 import { IsNotEmpty } from "class-validator";
 
-export class CreateEventBriefingDto {
+export class PostEventDto {
   @IsNotEmpty()
-  name: string;
+  event_name: string;
 }

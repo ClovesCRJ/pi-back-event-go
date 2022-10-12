@@ -6,25 +6,25 @@ export class PromotionBriefing {
   @PrimaryColumn()
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   promotion_means: string;
 
-  @Column()
+  @Column({ nullable: true })
   alternative_media: string;
 
-  @Column()
+  @Column({ nullable: true })
   fisical_actions: string;
 
-  @Column()
+  @Column({ nullable: true })
   start: Date;
 
-  @Column()
+  @Column({ nullable: true })
   end: Date;
 
-  @Column()
+  @Column({ nullable: true })
   designer: string;
 
-  @Column()
+  @Column({ nullable: true })
   video_maker: string;
 
   @CreateDateColumn()

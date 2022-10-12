@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateStrategyBriefingDto } from './dto/create-strategy_briefing.dto';
 import { UpdateStrategyBriefingDto } from './dto/update-strategy_briefing.dto';
+import { StrategyBriefing } from './entities/strategy_briefing.entity';
 
 @Injectable()
 export class StrategyBriefingService {
-  create(createStrategyBriefingDto: CreateStrategyBriefingDto) {
-    return 'This action adds a new strategyBriefing';
+  constructor(
+    @InjectRepository(StrategyBriefing)
+    private readonly strategyBriefingRepository: Repository<StrategyBriefing>,
+  ) {}
+
+  async create(createStrategyBriefingDto: CreateStrategyBriefingDto) {
+    const strategyBriefing = await this.strategyBriefingRepository.create(createStrategyBriefingDto);
+    return await this.strategyBriefingRepository.save(strategyBriefing);
   }
 
-  findAll() {
-    return `This action returns all strategyBriefing`;
-  }
+  // findAll() {
+  //   return `This action returns all strategyBriefing`;
+  // }
 
-  findOne(id: number) {
-    return `This action returns a #${id} strategyBriefing`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} strategyBriefing`;
+  // }
 
-  update(id: number, updateStrategyBriefingDto: UpdateStrategyBriefingDto) {
-    return `This action updates a #${id} strategyBriefing`;
-  }
+  // update(id: number, updateStrategyBriefingDto: UpdateStrategyBriefingDto) {
+  //   return `This action updates a #${id} strategyBriefing`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} strategyBriefing`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} strategyBriefing`;
+  // }
 }

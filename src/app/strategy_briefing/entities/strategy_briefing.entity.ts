@@ -6,22 +6,22 @@ export class StrategyBriefing {
   @PrimaryColumn()
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   opportunities: string;
 
-  @Column()
+  @Column({ nullable: true })
   threats: string;
 
-  @Column()
+  @Column({ nullable: true })
   extra_attractions: string;
 
-  @Column()
+  @Column({ nullable: true })
   extra_services: string;
 
-  @Column()
+  @Column({ nullable: true })
   promotion_strategies: string;
 
-  @Column()
+  @Column({ nullable: true })
   sales_strategies: string;
 
   @CreateDateColumn()

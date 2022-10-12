@@ -7,28 +7,28 @@ import { UpdateStrategyBriefingDto } from './dto/update-strategy_briefing.dto';
 export class StrategyBriefingController {
   constructor(private readonly strategyBriefingService: StrategyBriefingService) {}
 
-  @Post()
-  create(@Body() createStrategyBriefingDto: CreateStrategyBriefingDto) {
-    return this.strategyBriefingService.create(createStrategyBriefingDto);
-  }
+  // @Post()
+  // create(@Body() createStrategyBriefingDto: CreateStrategyBriefingDto) {
+  //   return this.strategyBriefingService.create(createStrategyBriefingDto);
+  // }
 
-  @Get()
-  findAll() {
-    return this.strategyBriefingService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.strategyBriefingService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.strategyBriefingService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.strategyBriefingService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStrategyBriefingDto: UpdateStrategyBriefingDto) {
-    return this.strategyBriefingService.update(+id, updateStrategyBriefingDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateStrategyBriefingDto: UpdateStrategyBriefingDto) {
+  //   return this.strategyBriefingService.update(+id, updateStrategyBriefingDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.strategyBriefingService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.strategyBriefingService.remove(+id);
+  // }
 }

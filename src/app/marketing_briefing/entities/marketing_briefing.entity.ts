@@ -6,13 +6,13 @@ export class MarketingBriefing {
   @PrimaryColumn()
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   strengths: string;
 
-  @Column()
+  @Column({ nullable: true })
   weaknesses: string;
 
-  @Column()
+  @Column({ nullable: true })
   what_change: string;
 
   @CreateDateColumn()

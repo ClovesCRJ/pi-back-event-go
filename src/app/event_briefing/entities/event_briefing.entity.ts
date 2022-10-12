@@ -9,43 +9,43 @@ export class EventBriefing {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   event_type: string;
 
-  @Column()
+  @Column({ nullable: true })
   brand_history: string;
 
-  @Column()
+  @Column({ nullable: true })
   purpose: string;
 
-  @Column()
+  @Column({ nullable: true })
   event_date: Date;
 
-  @Column()
+  @Column({ nullable: true })
   locale: string;
 
-  @Column()
+  @Column({ nullable: true })
   attendes: number;
 
-  @Column()
+  @Column({ nullable: true })
   theme: string;
 
-  @Column()
+  @Column({ nullable: true })
   time_duration: string;
 
-  @Column()
+  @Column({ nullable: true })
   music_attractions: string;
 
-  @Column()
+  @Column({ nullable: true })
   other_attractions: string;
 
-  @Column()
+  @Column({ nullable: true })
   sectors: string;
 
-  @Column()
+  @Column({ nullable: true })
   special_sectors: string;
 
-  @Column()
+  @Column({ nullable: true })
   obs: string;
 
   @CreateDateColumn()

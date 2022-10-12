@@ -7,28 +7,28 @@ import { UpdateMarketingBriefingDto } from './dto/update-marketing_briefing.dto'
 export class MarketingBriefingController {
   constructor(private readonly marketingBriefingService: MarketingBriefingService) {}
 
-  @Post()
-  create(@Body() createMarketingBriefingDto: CreateMarketingBriefingDto) {
-    return this.marketingBriefingService.create(createMarketingBriefingDto);
-  }
+  // @Post()
+  // create(@Body() createMarketingBriefingDto: CreateMarketingBriefingDto) {
+  //   return this.marketingBriefingService.create(createMarketingBriefingDto);
+  // }
 
-  @Get()
-  findAll() {
-    return this.marketingBriefingService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.marketingBriefingService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.marketingBriefingService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.marketingBriefingService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMarketingBriefingDto: UpdateMarketingBriefingDto) {
-    return this.marketingBriefingService.update(+id, updateMarketingBriefingDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateMarketingBriefingDto: UpdateMarketingBriefingDto) {
+  //   return this.marketingBriefingService.update(+id, updateMarketingBriefingDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.marketingBriefingService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.marketingBriefingService.remove(+id);
+  // }
 }

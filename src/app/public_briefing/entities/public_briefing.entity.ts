@@ -6,22 +6,22 @@ export class PublicBriefing {
   @PrimaryColumn()
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   target_public: string;
 
-  @Column()
+  @Column({ nullable: true })
   gender: string;
 
-  @Column()
+  @Column({ nullable: true })
   age_group: string;
 
-  @Column()
+  @Column({ nullable: true })
   socioeconomic: string;
 
-  @Column()
+  @Column({ nullable: true })
   origin_city: string;
 
-  @Column()
+  @Column({ nullable: true })
   obs: string;
 
   @CreateDateColumn()

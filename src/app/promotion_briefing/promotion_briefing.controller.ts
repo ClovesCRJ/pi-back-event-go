@@ -7,28 +7,28 @@ import { UpdatePromotionBriefingDto } from './dto/update-promotion_briefing.dto'
 export class PromotionBriefingController {
   constructor(private readonly promotionBriefingService: PromotionBriefingService) {}
 
-  @Post()
-  create(@Body() createPromotionBriefingDto: CreatePromotionBriefingDto) {
-    return this.promotionBriefingService.create(createPromotionBriefingDto);
-  }
+  // @Post()
+  // create(@Body() createPromotionBriefingDto: CreatePromotionBriefingDto) {
+  //   return this.promotionBriefingService.create(createPromotionBriefingDto);
+  // }
 
-  @Get()
-  findAll() {
-    return this.promotionBriefingService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.promotionBriefingService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.promotionBriefingService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.promotionBriefingService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePromotionBriefingDto: UpdatePromotionBriefingDto) {
-    return this.promotionBriefingService.update(+id, updatePromotionBriefingDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updatePromotionBriefingDto: UpdatePromotionBriefingDto) {
+  //   return this.promotionBriefingService.update(+id, updatePromotionBriefingDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.promotionBriefingService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.promotionBriefingService.remove(+id);
+  // }
 }
