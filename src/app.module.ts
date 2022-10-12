@@ -17,7 +17,7 @@ import { CostItemModule } from './app/cost_item/cost_item.module';
 import { EventRevenueModule } from './app/event_revenue/event_revenue.module';
 import { TicketRevenueListModule } from './app/ticket_revenue_list/ticket_revenue_list.module';
 import { TicketRevenueModule } from './app/ticket_revenue/ticket_revenue.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './app/auth/auth.module';
 
 @Module({
   imports: [
