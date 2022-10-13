@@ -1,4 +1,10 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateMarketingBriefingDto } from './create-marketing_briefing.dto';
+import { IsOptional } from "class-validator";
 
-export class UpdateMarketingBriefingDto extends PartialType(CreateMarketingBriefingDto) {}
+export class UpdateMarketingBriefingDto {
+  @IsOptional()
+  strengths: string;
+  @IsOptional()
+	weaknesses: string;
+  @IsOptional()
+	what_change: string;
+}

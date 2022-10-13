@@ -1,34 +1,42 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, forwardRef, UseGuards, Req, Put } from '@nestjs/common';
 import { PromotionBriefingService } from './promotion_briefing.service';
 import { CreatePromotionBriefingDto } from './dto/create-promotion_briefing.dto';
 import { UpdatePromotionBriefingDto } from './dto/update-promotion_briefing.dto';
+import { EventService } from '../event/event.service';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('promotion-briefing')
+@Controller('/api/v1/events/:event_id/promotion-briefing')
 export class PromotionBriefingController {
-  constructor(private readonly promotionBriefingService: PromotionBriefingService) {}
+  constructor(
+    private readonly promotionBriefingService: PromotionBriefingService,
+    @Inject(forwardRef(() => EventService))
+    private readonly eventService: EventService,
+  ) {}
 
-  // @Post()
-  // create(@Body() createPromotionBriefingDto: CreatePromotionBriefingDto) {
-  //   return this.promotionBriefingService.create(createPromotionBriefingDto);
-  // }
+  @Get()
+  @UseGuards(AuthGuard('jwt'))
+  async findOne(@Param('event_id') event_id: string, @Req() req: any) {
+    const event = await this.eventService.findOneBelong({
+      relations: ["briefing.promotion_briefing"],
+      where: { id: event_id, owner_id: req.user.id },
+    });
+    return event.briefing.promotion_briefing;
+  }
 
-  // @Get()
-  // findAll() {
-  //   return this.promotionBriefingService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.promotionBriefingService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updatePromotionBriefingDto: UpdatePromotionBriefingDto) {
-  //   return this.promotionBriefingService.update(+id, updatePromotionBriefingDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.promotionBriefingService.remove(+id);
-  // }
+  @Put()
+  @UseGuards(AuthGuard('jwt'))
+  async update(
+    @Param('event_id') event_id: string,
+    @Body() updatePromotionBriefingDto: UpdatePromotionBriefingDto,
+    @Req() req: any,
+  ) {
+    const event = await this.eventService.findOneBelong({
+      relations: ["briefing.promotion_briefing"],
+      where: { id: event_id, owner_id: req.user.id },
+    });
+    return this.promotionBriefingService.update(
+      event.briefing.promotion_briefing_id,
+      updatePromotionBriefingDto,
+    );
+  }
 }

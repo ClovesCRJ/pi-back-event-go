@@ -21,15 +21,11 @@ export class PromotionBriefingService {
     return await this.promotionBriefingRepository.delete({ id });
   }
 
-  // findAll() {
-  //   return `This action returns all promotionBriefing`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} promotionBriefing`;
-  // }
-
-  // update(id: number, updatePromotionBriefingDto: UpdatePromotionBriefingDto) {
-  //   return `This action updates a #${id} promotionBriefing`;
-  // }
+  async update(id: string, updatePromotionBriefingDto: UpdatePromotionBriefingDto) {
+    const promotionBriefing = await this.promotionBriefingRepository.findOneOrFail({
+      where: { id },
+    });
+    this.promotionBriefingRepository.merge(promotionBriefing, updatePromotionBriefingDto);
+    return await this.promotionBriefingRepository.save(promotionBriefing);
+  }
 }

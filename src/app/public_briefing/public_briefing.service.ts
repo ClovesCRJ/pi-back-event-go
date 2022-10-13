@@ -22,15 +22,11 @@ export class PublicBriefingService {
     return await this.publicBriefingRepository.delete({ id });
   }
 
-  // findAll() {
-  //   return `This action returns all publicBriefing`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} publicBriefing`;
-  // }
-
-  // update(id: number, updatePublicBriefingDto: UpdatePublicBriefingDto) {
-  //   return `This action updates a #${id} publicBriefing`;
-  // }
+  async update(id: string, updatePublicBriefingDto: UpdatePublicBriefingDto) {
+    const publicBriefing = await this.publicBriefingRepository.findOneOrFail({
+      where: { id },
+    });
+    this.publicBriefingRepository.merge(publicBriefing, updatePublicBriefingDto);
+    return await this.publicBriefingRepository.save(publicBriefing);
+  }
 }

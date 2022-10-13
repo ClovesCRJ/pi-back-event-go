@@ -21,15 +21,11 @@ export class MarketingBriefingService {
     return await this.marketingBriefingRepository.delete({ id });
   }
 
-  // findAll() {
-  //   return `This action returns all marketingBriefing`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} marketingBriefing`;
-  // }
-
-  // update(id: number, updateMarketingBriefingDto: UpdateMarketingBriefingDto) {
-  //   return `This action updates a #${id} marketingBriefing`;
-  // }
+  async update(id: string, updateMarketingBriefingDto: UpdateMarketingBriefingDto) {
+    const marketingBriefing = await this.marketingBriefingRepository.findOneOrFail({
+      where: { id },
+    });
+    this.marketingBriefingRepository.merge(marketingBriefing, updateMarketingBriefingDto);
+    return await this.marketingBriefingRepository.save(marketingBriefing);
+  }
 }

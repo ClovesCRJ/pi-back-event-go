@@ -1,29 +1,32 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateEventBriefingDto } from './create-event_briefing.dto';
-import { IsDate, IsNotEmpty } from 'class-validator';
-import { IsNumber } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class UpdateEventBriefingDto {
   @IsNotEmpty()
   name: string;
-    
-  event_type: string;
+	@IsOptional()
+	event_type: string;
+	@IsOptional()
 	brand_history: string;
+	@IsOptional()
 	purpose: string;
-	
-  @IsDate()
+	@IsOptional()
   event_date: Date;
-
+	@IsOptional()
 	locale: string;
-
-  @IsNumber()
-	attendes: number;
-  
+	@IsOptional()
+  attendes: number;
+	@IsOptional()
 	theme: string;
+	@IsOptional()
 	time_duration: string;
+	@IsOptional()
 	music_attractions: string;
+	@IsOptional()
 	other_attractions: string;
+	@IsOptional()
 	sectors: string;
+	@IsOptional()
 	special_sectors: string;
+	@IsOptional()
 	obs: string;
 }

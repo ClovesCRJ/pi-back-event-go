@@ -1,34 +1,43 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, forwardRef, UseGuards, Req, Put } from '@nestjs/common';
 import { PublicBriefingService } from './public_briefing.service';
 import { CreatePublicBriefingDto } from './dto/create-public_briefing.dto';
 import { UpdatePublicBriefingDto } from './dto/update-public_briefing.dto';
+import { EventModule } from '../event/event.module';
+import { EventService } from '../event/event.service';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('public-briefing')
+@Controller('/api/v1/events/:event_id/public-briefing')
 export class PublicBriefingController {
-  constructor(private readonly publicBriefingService: PublicBriefingService) {}
+  constructor(
+    private readonly publicBriefingService: PublicBriefingService,
+    @Inject(forwardRef(() => EventService))
+    private readonly eventService: EventService,
+  ) {}
 
-  // @Post()
-  // create(@Body() createPublicBriefingDto: CreatePublicBriefingDto) {
-  //   return this.publicBriefingService.create(createPublicBriefingDto);
-  // }
+  @Get()
+  @UseGuards(AuthGuard('jwt'))
+  async findOne(@Param('event_id') event_id: string, @Req() req: any) {
+    const event = await this.eventService.findOneBelong({
+      relations: ["briefing.public_briefing"],
+      where: { id: event_id, owner_id: req.user.id },
+    });
+    return event.briefing.public_briefing;
+  }
 
-  // @Get()
-  // findAll() {
-  //   return this.publicBriefingService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.publicBriefingService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updatePublicBriefingDto: UpdatePublicBriefingDto) {
-  //   return this.publicBriefingService.update(+id, updatePublicBriefingDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.publicBriefingService.remove(+id);
-  // }
+  @Put()
+  @UseGuards(AuthGuard('jwt'))
+  async update(
+    @Param('event_id') event_id: string,
+    @Body() updatePublicBriefingDto: UpdatePublicBriefingDto,
+    @Req() req: any,
+  ) {
+    const event = await this.eventService.findOneBelong({
+      relations: ["briefing.public_briefing"],
+      where: { id: event_id, owner_id: req.user.id },
+    });
+    return this.publicBriefingService.update(
+      event.briefing.public_briefing_id,
+      updatePublicBriefingDto,
+    );
+  }
 }

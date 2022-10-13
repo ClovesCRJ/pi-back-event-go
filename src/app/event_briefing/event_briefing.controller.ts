@@ -13,16 +13,6 @@ export class EventBriefingController {
     private readonly eventService: EventService,
   ) {}
 
-  // @Post()
-  // create(@Body() createEventBriefingDto: CreateEventBriefingDto) {
-  //   return this.eventBriefingService.create(createEventBriefingDto);
-  // }
-
-  // @Get()
-  // findAll() {
-  //   return this.eventBriefingService.findAll();
-  // }
-
   @Get()
   @UseGuards(AuthGuard('jwt'))
   async findOne(@Param('event_id') event_id: string, @Req() req: any) {
@@ -44,14 +34,9 @@ export class EventBriefingController {
       relations: ["briefing.event_briefing"],
       where: { id: event_id, owner_id: req.user.id },
     });
-
-    console.log(event);
-    
-    return this.eventBriefingService.update(event.briefing.event_briefing_id, updateEventBriefingDto);
+    return this.eventBriefingService.update(
+      event.briefing.event_briefing_id,
+      updateEventBriefingDto,
+    );
   }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.eventBriefingService.remove(+id);
-  // }
 }
