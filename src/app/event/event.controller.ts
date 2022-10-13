@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, HttpCode, HttpStatus, Inject, forwardRef } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -15,6 +15,7 @@ import { StrategyBriefingService } from '../strategy_briefing/strategy_briefing.
 export class EventController {
   constructor(
     private readonly eventService: EventService,
+    @Inject(forwardRef(() => BriefingService))
     private readonly briefingService: BriefingService,
     private readonly eventBriefingService: EventBriefingService,
     private readonly marketingBriefingService: MarketingBriefingService,

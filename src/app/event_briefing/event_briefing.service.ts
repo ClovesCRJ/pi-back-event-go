@@ -21,15 +21,11 @@ export class EventBriefingService {
     return await this.eventBriefingRepository.delete({ id });
   }
 
-  // findAll() {
-  //   return `This action returns all eventBriefing`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} eventBriefing`;
-  // }
-
-  // update(id: number, updateEventBriefingDto: UpdateEventBriefingDto) {
-  //   return `This action updates a #${id} eventBriefing`;
-  // }
+  async update(id: string, updateEventBriefingDto: UpdateEventBriefingDto) {
+    const eventBriefing = await this.eventBriefingRepository.findOneOrFail({
+      where: { id },
+    });
+    this.eventBriefingRepository.merge(eventBriefing, updateEventBriefingDto);
+    return await this.eventBriefingRepository.save(eventBriefing);
+  }
 }

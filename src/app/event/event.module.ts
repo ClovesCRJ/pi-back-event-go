@@ -21,6 +21,7 @@ import { StrategyBriefingModule } from '../strategy_briefing/strategy_briefing.m
     StrategyBriefingModule,
   ],
   controllers: [EventController],
-  providers: [EventService]
+  providers: [EventService],
+  exports: [EventService],
 })
 export class EventModule {}
