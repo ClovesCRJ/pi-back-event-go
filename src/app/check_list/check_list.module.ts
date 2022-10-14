@@ -11,6 +11,7 @@ import { EventModule } from '../event/event.module';
     EventModule,
   ],
   controllers: [CheckListController],
-  providers: [CheckListService]
+  providers: [CheckListService],
+  exports: [CheckListService],
 })
 export class CheckListModule {}
