@@ -15,7 +15,9 @@ export class CheckList {
   @JoinColumn({ name: "event_id" })
   event: Event;
 
-  @OneToMany(() => CheckItem, check_item => check_item.check_list)
+  @OneToMany(() => CheckItem, check_item => check_item.check_list, {
+    cascade: true,
+  })
   check_items: CheckItem[];
 
   @Column()

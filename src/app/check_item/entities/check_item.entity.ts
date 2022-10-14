@@ -17,19 +17,19 @@ export class CheckItem {
   @Column()
   name: string;
 
-  @Column()
+  @Column({default: false})
   checked: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   status: string;
 
-  @Column()
+  @Column({ nullable: true })
   obs: string;
 
-  @Column()
+  @Column({ nullable: true })
   next_step: string;
 
-  @Column()
+  @Column({ nullable: true })
   deadline: Date;
 
   @CreateDateColumn()

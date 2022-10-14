@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req, Put, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CheckListService } from '../check_list/check_list.service';
 import { EventService } from '../event/event.service';
@@ -48,18 +48,62 @@ export class CheckItemController {
     return this.checkItemService.create(check_list.id, createCheckItemDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.checkItemService.findOne(+id);
+  @Get(':check_item_id')
+  @UseGuards(AuthGuard('jwt'))
+  async findOne(
+    @Param('event_id') event_id: string,
+    @Param('check_list_id') check_list_id: string,
+    @Param('check_item_id') check_item_id: string,
+    @Req() req: any,
+  ) {
+    const event = await this.eventService.findOneBelong({
+      where: { id: event_id, owner_id: req.user.id },
+    });
+    const check_list = await this.checkListService.findOne({
+      where: { id: check_list_id, event_id: event.id },
+    });
+    return await this.checkItemService.findOne({
+      where: { id: check_item_id, check_list_id: check_list.id },
+    });
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCheckItemDto: UpdateCheckItemDto) {
-    return this.checkItemService.update(+id, updateCheckItemDto);
+  @Put(':check_item_id')
+  @UseGuards(AuthGuard('jwt'))
+  async update(
+    @Param('event_id') event_id: string,
+    @Param('check_list_id') check_list_id: string,
+    @Param('check_item_id') check_item_id: string,
+    @Req() req: any,
+    @Body() updateCheckItemDto: UpdateCheckItemDto,
+  ) {
+    const event = await this.eventService.findOneBelong({
+      where: { id: event_id, owner_id: req.user.id },
+    });
+    const check_list = await this.checkListService.findOne({
+      where: { id: check_list_id, event_id: event.id },
+    });
+    return await this.checkItemService.update(
+      check_item_id,
+      check_list.id,
+      updateCheckItemDto,
+    );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.checkItemService.remove(+id);
+  @Delete(':check_item_id')
+  @UseGuards(AuthGuard('jwt'))
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(
+    @Param('event_id') event_id: string,
+    @Param('check_list_id') check_list_id: string,
+    @Param('check_item_id') check_item_id: string,
+    @Req() req: any,
+  ) {
+    const event = await this.eventService.findOneBelong({
+      where: { id: event_id, owner_id: req.user.id },
+    });
+    const check_list = await this.checkListService.findOne({
+      where: { id: check_list_id, event_id: event.id },
+    });
+    return await this.checkItemService.remove(check_item_id, check_list.id);
   }
 }

@@ -1,4 +1,21 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCheckItemDto } from './create-check_item.dto';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
-export class UpdateCheckItemDto extends PartialType(CreateCheckItemDto) {}
+export class UpdateCheckItemDto {
+  @IsNotEmpty()
+  name: string;
+
+  @IsOptional()
+  checked: boolean;
+
+  @IsOptional()
+  status: string;
+
+  @IsOptional()
+  obs: string;
+
+  @IsOptional()
+  next_step: string;
+
+  @IsOptional()
+  deadline: Date;
+}
