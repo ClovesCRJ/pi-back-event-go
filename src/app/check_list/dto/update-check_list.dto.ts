@@ -1,4 +1,6 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCheckListDto } from './create-check_list.dto';
+import { IsNotEmpty } from 'class-validator';
 
-export class UpdateCheckListDto extends PartialType(CreateCheckListDto) {}
+export class UpdateCheckListDto {
+  @IsNotEmpty()
+  name: string;
+}
