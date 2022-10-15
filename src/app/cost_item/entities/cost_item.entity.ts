@@ -23,10 +23,10 @@ export class CostItem {
   @Column()
   value: number;
 
-  @Column()
+  @Column({ nullable: true })
   spent: number;
 
-  @Column()
+  @Column({ nullable: true })
   responsible: string;
 
   @CreateDateColumn()

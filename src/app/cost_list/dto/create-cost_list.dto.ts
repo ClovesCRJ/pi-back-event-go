@@ -1,12 +1,12 @@
 import { Type } from "class-transformer";
 import { IsNotEmpty, IsOptional, ValidateNested } from "class-validator";
-import { CreateCheckItemDto } from "src/app/check_item/dto/create-check_item.dto";
+import { CreateCostItemDto } from "src/app/cost_item/dto/create-cost_item.dto";
 
-export class CreateCheckListDto {
+export class CreateCostListDto {
   @IsNotEmpty()
   name: string;
   @IsOptional()
   @ValidateNested({ each: true })
-  @Type(() => CreateCheckItemDto)
-  check_items: CreateCheckItemDto[];
+  @Type(() => CreateCostItemDto)
+  cost_items: CreateCostItemDto[];
 }

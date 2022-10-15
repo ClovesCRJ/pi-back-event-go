@@ -15,7 +15,9 @@ export class CostList {
   @JoinColumn({ name: "event_id" })
   event: Event;
 
-  @OneToMany(() => CostItem, cost_item => cost_item.cost_list)
+  @OneToMany(() => CostItem, cost_item => cost_item.cost_list, {
+    cascade: true,
+  })
   cost_items: CostItem[];
 
   @Column()

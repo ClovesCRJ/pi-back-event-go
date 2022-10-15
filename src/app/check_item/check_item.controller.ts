@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req, Put, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req, Put, HttpCode, HttpStatus, forwardRef, Inject } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CheckListService } from '../check_list/check_list.service';
 import { EventService } from '../event/event.service';
@@ -11,8 +11,8 @@ export class CheckItemController {
   constructor(
     private readonly checkItemService: CheckItemService,
     private readonly eventService: EventService,
+    @Inject(forwardRef(() => CheckListService))
     private readonly checkListService: CheckListService,
-
   ) {}
 
   @Get()

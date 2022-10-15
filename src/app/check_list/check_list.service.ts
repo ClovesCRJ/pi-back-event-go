@@ -44,10 +44,7 @@ export class CheckListService {
     return await this.checkListRepository.save(checkList);
   }
 
-  async remove(event_id: string, id: string) {
-    const checkList = await this.findOne({
-      where: { id, event_id },
-    });
-    return await this.checkListRepository.delete({ id: checkList.id });
+  async remove(id: string) {
+    return await this.checkListRepository.delete({ id });
   }
 }

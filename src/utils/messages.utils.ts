@@ -3,6 +3,8 @@ const USER_NOT_FOUND = "O usuário não existe";
 const EVENT_NOT_FOUND = "O evento não existe";
 const CHECK_LIST_NOT_FOUND = "A check-list não existe";
 const CHECK_ITEM_NOT_FOUND = "O check-item não existe";
+const COST_LIST_NOT_FOUND = "A cost-list não existe";
+const COST_ITEM_NOT_FOUND = "O cost-item não existe";
 const EMAIL_OR_PASSWORD_INVALID = "Email ou senha inválidos.";
 
 export const MessagesUtils = {
@@ -12,4 +14,6 @@ export const MessagesUtils = {
   CHECK_LIST_NOT_FOUND,
   CHECK_ITEM_NOT_FOUND,
   EMAIL_OR_PASSWORD_INVALID,
+  COST_LIST_NOT_FOUND,
+  COST_ITEM_NOT_FOUND,
 }

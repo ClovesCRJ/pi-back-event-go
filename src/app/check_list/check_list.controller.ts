@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req, Put, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req, Put, HttpCode, HttpStatus, Inject, forwardRef } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { CheckItemService } from '../check_item/check_item.service';
 import { EventService } from '../event/event.service';
 import { CheckListService } from './check_list.service';
 import { CreateCheckListDto } from './dto/create-check_list.dto';
@@ -9,6 +10,8 @@ import { UpdateCheckListDto } from './dto/update-check_list.dto';
 export class CheckListController {
   constructor(
     private readonly checkListService: CheckListService,
+    @Inject(forwardRef(() => CheckItemService))
+    private readonly checkItemService: CheckItemService,
     private readonly eventService: EventService,
   ) {}
 
@@ -34,7 +37,7 @@ export class CheckListController {
     const event = await this.eventService.findOneBelong({
       where: { id: event_id, owner_id: req.user.id },
     });
-    return await this.checkListService.findAll(event_id);
+    return await this.checkListService.findAll(event.id);
   }
 
   @Get(':check_list_id')
@@ -82,9 +85,16 @@ export class CheckListController {
     const event = await this.eventService.findOneBelong({
       where: { id: event_id, owner_id: req.user.id },
     });
-    return await this.checkListService.remove(
-      event.id,
-      check_list_id,
-    );
+    const check_list = await this.checkListService.findOne({
+      relations: ["check_items"],
+      where: { id: check_list_id, event_id: event.id },
+    });
+    for (const check_item in check_list.check_items) {
+      if (Object.prototype.hasOwnProperty.call(check_list.check_items, check_item)) {
+        const item = check_list.check_items[check_item];
+        await this.checkItemService.remove(item.id, check_list.id);
+      }
+    }
+    return await this.checkListService.remove(check_list_id);
   }
 }

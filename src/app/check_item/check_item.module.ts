@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { CheckItemService } from './check_item.service';
 import { CheckItemController } from './check_item.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,8 +10,9 @@ import { CheckListModule } from '../check_list/check_list.module';
   imports: [
     TypeOrmModule.forFeature([CheckItem]),
     EventModule,
-    CheckListModule,
+    forwardRef(() => CheckListModule),
   ],
+  exports: [CheckItemService],
   controllers: [CheckItemController],
   providers: [CheckItemService]
 })
