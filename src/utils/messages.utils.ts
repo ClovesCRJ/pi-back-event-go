@@ -6,6 +6,8 @@ const CHECK_ITEM_NOT_FOUND = "O check-item não existe";
 const COST_LIST_NOT_FOUND = "A cost-list não existe";
 const COST_ITEM_NOT_FOUND = "O cost-item não existe";
 const EMAIL_OR_PASSWORD_INVALID = "Email ou senha inválidos.";
+const TICKET_REVENUE_LIST_NOT_FOUND = "A ticket-revenue-list não existe";
+const TICKET_REVENUE_NOT_FOUND = "A ticket-revenue não existe";
 
 export const MessagesUtils = {
   PASSWORD_VALID,
@@ -16,4 +18,6 @@ export const MessagesUtils = {
   EMAIL_OR_PASSWORD_INVALID,
   COST_LIST_NOT_FOUND,
   COST_ITEM_NOT_FOUND,
+  TICKET_REVENUE_LIST_NOT_FOUND,
+  TICKET_REVENUE_NOT_FOUND
 }

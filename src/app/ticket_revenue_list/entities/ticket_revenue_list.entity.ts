@@ -15,7 +15,9 @@ export class TicketRevenueList {
   @JoinColumn({ name: "event_id" })
   event: Event;
 
-  @OneToMany(() => TicketRevenue, ticket_revenue => ticket_revenue.ticket_revenue_list)
+  @OneToMany(() => TicketRevenue, ticket_revenue => ticket_revenue.ticket_revenue_list, {
+    cascade: true,
+  })
   ticket_revenues: TicketRevenue[];
 
   @Column()
