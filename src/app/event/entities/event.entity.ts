@@ -9,6 +9,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, One
 import { v4 as uuid } from "uuid";
 import { CashInFlow } from "src/app/cash_in_flow/entities/cash_in_flow.entity";
 import { CashOutFlow } from "src/app/cash_out_flow/entities/cash_out_flow.entity";
+import { BookingList } from "src/app/booking_list/entities/booking_list.entity";
 
 @Entity("events")
 export class Event {
@@ -42,6 +43,9 @@ export class Event {
 
   @OneToMany(() => CashOutFlow, cash_out_flow => cash_out_flow.event)
   cash_out_flows: CashOutFlow[];
+
+  @OneToMany(() => BookingList, booking_list => booking_list.event)
+  booking_lists: BookingList[];
 
   @Column()
   briefing_id: string;

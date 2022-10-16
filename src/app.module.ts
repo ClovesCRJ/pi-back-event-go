@@ -20,6 +20,8 @@ import { TicketRevenueModule } from './app/ticket_revenue/ticket_revenue.module'
 import { AuthModule } from './app/auth/auth.module';
 import { CashInFlowModule } from './app/cash_in_flow/cash_in_flow.module';
 import { CashOutFlowModule } from './app/cash_out_flow/cash_out_flow.module';
+import { BookingListModule } from './app/booking_list/booking_list.module';
+import { BookingItemModule } from './app/booking_item/booking_item.module';
 
 @Module({
   imports: [
@@ -53,6 +55,8 @@ import { CashOutFlowModule } from './app/cash_out_flow/cash_out_flow.module';
     AuthModule,
     CashInFlowModule,
     CashOutFlowModule,
+    BookingListModule,
+    BookingItemModule,
   ],
   controllers: [],
   providers: [],
