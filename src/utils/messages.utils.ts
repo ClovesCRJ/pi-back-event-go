@@ -9,6 +9,8 @@ const EMAIL_OR_PASSWORD_INVALID = "Email ou senha inválidos.";
 const TICKET_REVENUE_LIST_NOT_FOUND = "A ticket-revenue-list não existe";
 const TICKET_REVENUE_NOT_FOUND = "A ticket-revenue não existe";
 const EVENT_REVENUE_NOT_FOUND = "O event-revenue não existe";
+const CASH_IN_FLOW_NOT_FOUND = "O cash_in_flow não existe";
+const CASH_OUT_FLOW_NOT_FOUND = "O cash_out_flow não existe";
 
 export const MessagesUtils = {
   PASSWORD_VALID,
@@ -21,5 +23,7 @@ export const MessagesUtils = {
   COST_ITEM_NOT_FOUND,
   TICKET_REVENUE_LIST_NOT_FOUND,
   TICKET_REVENUE_NOT_FOUND,
-  EVENT_REVENUE_NOT_FOUND
+  EVENT_REVENUE_NOT_FOUND,
+  CASH_IN_FLOW_NOT_FOUND,
+  CASH_OUT_FLOW_NOT_FOUND,
 }

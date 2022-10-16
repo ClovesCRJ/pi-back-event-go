@@ -11,6 +11,7 @@ import { PublicBriefingModule } from '../public_briefing/public_briefing.module'
 import { StrategyBriefingModule } from '../strategy_briefing/strategy_briefing.module';
 
 @Module({
+  // TODO: Includes Removal of CheckList, CostLIst, TIcketRevenuesList, EventRevenues, CashInFlow and CashOutFlow.
   imports: [
     TypeOrmModule.forFeature([Event]),
     BriefingModule,

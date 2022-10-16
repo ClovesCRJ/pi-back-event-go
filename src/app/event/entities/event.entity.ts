@@ -7,6 +7,8 @@ import { User } from "../../user/entities/user.entity";
 import { UserPermission } from "../../user_permission/entities/user_permission.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { CashInFlow } from "src/app/cash_in_flow/entities/cash_in_flow.entity";
+import { CashOutFlow } from "src/app/cash_out_flow/entities/cash_out_flow.entity";
 
 @Entity("events")
 export class Event {
@@ -34,6 +36,12 @@ export class Event {
 
   @OneToMany(() => EventRevenue, event_revenue => event_revenue.event)
   event_revenues: EventRevenue[];
+
+  @OneToMany(() => CashInFlow, cash_in_flow => cash_in_flow.event)
+  cash_in_flows: CashInFlow[];
+
+  @OneToMany(() => CashOutFlow, cash_out_flow => cash_out_flow.event)
+  cash_out_flows: CashOutFlow[];
 
   @Column()
   briefing_id: string;
