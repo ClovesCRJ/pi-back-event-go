@@ -22,6 +22,8 @@ import { CashInFlowModule } from './app/cash_in_flow/cash_in_flow.module';
 import { CashOutFlowModule } from './app/cash_out_flow/cash_out_flow.module';
 import { BookingListModule } from './app/booking_list/booking_list.module';
 import { BookingItemModule } from './app/booking_item/booking_item.module';
+import { TicketListModule } from './app/ticket_list/ticket_list.module';
+import { TicketItemModule } from './app/ticket_item/ticket_item.module';
 
 @Module({
   imports: [
@@ -57,6 +59,8 @@ import { BookingItemModule } from './app/booking_item/booking_item.module';
     CashOutFlowModule,
     BookingListModule,
     BookingItemModule,
+    TicketListModule,
+    TicketItemModule,
   ],
   controllers: [],
   providers: [],
