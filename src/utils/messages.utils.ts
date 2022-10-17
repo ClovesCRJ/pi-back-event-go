@@ -13,6 +13,8 @@ const CASH_IN_FLOW_NOT_FOUND = "O cash_in_flow não existe";
 const CASH_OUT_FLOW_NOT_FOUND = "O cash_out_flow não existe";
 const BOOKING_LIST_NOT_FOUND = "A booking-list não existe";
 const BOOKING_ITEM_NOT_FOUND = "O booking-item não existe";
+const TICKET_LIST_NOT_FOUND = "A ticket-list não existe";
+const TICKET_ITEM_NOT_FOUND = "O ticket-item não existe";
 
 
 export const MessagesUtils = {
@@ -31,4 +33,6 @@ export const MessagesUtils = {
   CASH_OUT_FLOW_NOT_FOUND,
   BOOKING_LIST_NOT_FOUND,
   BOOKING_ITEM_NOT_FOUND,
+  TICKET_LIST_NOT_FOUND,
+  TICKET_ITEM_NOT_FOUND,
 }
