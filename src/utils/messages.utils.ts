@@ -15,7 +15,7 @@ const BOOKING_LIST_NOT_FOUND = "A booking-list não existe";
 const BOOKING_ITEM_NOT_FOUND = "O booking-item não existe";
 const TICKET_LIST_NOT_FOUND = "A ticket-list não existe";
 const TICKET_ITEM_NOT_FOUND = "O ticket-item não existe";
-
+const ANNOTATION_NOT_FOUND = "A annotation não existe";
 
 export const MessagesUtils = {
   PASSWORD_VALID,
@@ -35,4 +35,5 @@ export const MessagesUtils = {
   BOOKING_ITEM_NOT_FOUND,
   TICKET_LIST_NOT_FOUND,
   TICKET_ITEM_NOT_FOUND,
+  ANNOTATION_NOT_FOUND,
 }

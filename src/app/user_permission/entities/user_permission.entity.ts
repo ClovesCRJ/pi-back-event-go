@@ -52,6 +52,30 @@ export class UserPermission {
   @Column()
   event_revenue_write: boolean;
 
+  @Column()
+  finance_read: boolean;
+
+  @Column()
+  finance_write: boolean;
+
+  @Column()
+  booking_read: boolean;
+
+  @Column()
+  booking_write: boolean;
+
+  @Column()
+  tickets_list_read: boolean;
+
+  @Column()
+  tickets_list_write: boolean;
+
+  @Column()
+  annotation_read: boolean;
+
+  @Column()
+  annotation_write: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 

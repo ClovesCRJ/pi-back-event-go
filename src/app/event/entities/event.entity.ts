@@ -10,6 +10,8 @@ import { v4 as uuid } from "uuid";
 import { CashInFlow } from "src/app/cash_in_flow/entities/cash_in_flow.entity";
 import { CashOutFlow } from "src/app/cash_out_flow/entities/cash_out_flow.entity";
 import { BookingList } from "src/app/booking_list/entities/booking_list.entity";
+import { TicketList } from "src/app/ticket_list/entities/ticket_list.entity";
+import { Annotation } from "src/app/annotation/entities/annotation.entity";
 
 @Entity("events")
 export class Event {
@@ -46,6 +48,12 @@ export class Event {
 
   @OneToMany(() => BookingList, booking_list => booking_list.event)
   booking_lists: BookingList[];
+
+  @OneToMany(() => TicketList, ticket_list => ticket_list.event)
+  ticket_lists: TicketList[];
+
+  @OneToMany(() => Annotation, annotation => annotation.event)
+  annotations: Annotation[];
 
   @Column()
   briefing_id: string;

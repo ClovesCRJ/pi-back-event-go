@@ -6,7 +6,7 @@ import { CreateTicketItemDto } from './dto/create-ticket_item.dto';
 import { UpdateTicketItemDto } from './dto/update-ticket_item.dto';
 import { TicketItemService } from './ticket_item.service';
 
-@Controller('/api/v1/events/:event_id/ticket-lists/ticket_list_id/ticket-items')
+@Controller('/api/v1/events/:event_id/ticket-lists/:ticket_list_id/ticket-items')
 export class TicketItemController {
   constructor(
     private readonly ticketItemService: TicketItemService,

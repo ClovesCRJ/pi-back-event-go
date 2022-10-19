@@ -10,7 +10,7 @@ export class TicketList {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.booking_lists)
+  @ManyToOne(() => Event, event => event.ticket_lists)
   @JoinColumn({ name: "event_id" })
   event: Event;
 

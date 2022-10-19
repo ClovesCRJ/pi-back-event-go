@@ -24,6 +24,7 @@ import { BookingListModule } from './app/booking_list/booking_list.module';
 import { BookingItemModule } from './app/booking_item/booking_item.module';
 import { TicketListModule } from './app/ticket_list/ticket_list.module';
 import { TicketItemModule } from './app/ticket_item/ticket_item.module';
+import { AnnotationModule } from './app/annotation/annotation.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { TicketItemModule } from './app/ticket_item/ticket_item.module';
     BookingItemModule,
     TicketListModule,
     TicketItemModule,
+    AnnotationModule,
   ],
   controllers: [],
   providers: [],

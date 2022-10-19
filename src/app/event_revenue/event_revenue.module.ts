@@ -11,6 +11,7 @@ import { EventModule } from '../event/event.module';
     EventModule,
   ],
   controllers: [EventRevenueController],
-  providers: [EventRevenueService]
+  providers: [EventRevenueService],
+  exports: [EventRevenueService],
 })
 export class EventRevenueModule {}
