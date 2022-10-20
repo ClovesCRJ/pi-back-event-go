@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, HttpCode, HttpStatus, Inject, forwardRef } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, HttpCode, HttpStatus, Inject, forwardRef, Query } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -57,9 +57,9 @@ export class EventController {
 
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
-  async findOne(@Param('id') id: string, @Req() req: any) {
+  async findOne(@Param('id') id: string, @Req() req: any, @Query('relations') relations: any) {
     return await this.eventService.findOneBelong({
-      relations: ["briefing", "briefing.event_briefing"],
+      relations,
       where: { id, owner_id: req.user.id },
     });
   }
