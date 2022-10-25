@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
 import { CreateEventRevenueDto } from './dto/create-event_revenue.dto';
 import { UpdateEventRevenueDto } from './dto/update-event_revenue.dto';
 import { EventRevenueService } from './event_revenue.service';
 
 @Controller('/api/v1/events/:event_id/event-revenues')
+@ApiTags('Event Revenue')
 export class EventRevenueController {
   constructor(
     private readonly eventRevenueService: EventRevenueService,

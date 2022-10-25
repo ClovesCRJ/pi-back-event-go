@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
 import { CashInFlowService } from './cash_in_flow.service';
 import { CreateCashInFlowDto } from './dto/create-cash_in_flow.entity';
 import { UpdateCashInFlowDto } from './dto/update-cash_in_flow.entity';
 
 @Controller('/api/v1/events/:event_id/cash-in-flows')
+@ApiTags('CashIn Flow')
 export class CashInFlowController {
   constructor(
     private readonly cashInFlowService: CashInFlowService,

@@ -4,8 +4,10 @@ import { CreateMarketingBriefingDto } from './dto/create-marketing_briefing.dto'
 import { UpdateMarketingBriefingDto } from './dto/update-marketing_briefing.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { EventService } from '../event/event.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/v1/events/:event_id/marketing-briefing')
+@ApiTags('Marketing Briefing')
 export class MarketingBriefingController {
   constructor(
     private readonly marketingBriefingService: MarketingBriefingService,

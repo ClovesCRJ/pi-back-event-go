@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
 import { CashOutFlowService } from './cash_out_flow.service';
 import { CreateCashOutFlowDto } from './dto/create-cash_out_flow.entity';
 import { UpdateCashOutFlowDto } from './dto/update-cash_out_flow.entity';
 
 @Controller('/api/v1/events/:event_id/cash-out-flows')
+@ApiTags('CashOut Flow')
 export class CashOutFlowController {
   constructor(
     private readonly cashOutFlowService: CashOutFlowService,

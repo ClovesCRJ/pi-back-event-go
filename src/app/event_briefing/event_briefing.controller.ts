@@ -4,8 +4,10 @@ import { CreateEventBriefingDto } from './dto/create-event_briefing.dto';
 import { UpdateEventBriefingDto } from './dto/update-event_briefing.dto';
 import { EventService } from '../event/event.service';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/v1/events/:event_id/event-briefing')
+@ApiTags('Event Briefing')
 export class EventBriefingController {
   constructor(
     private readonly eventBriefingService: EventBriefingService,

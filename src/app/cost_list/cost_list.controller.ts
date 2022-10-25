@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, forwardRef, Get, HttpCode, HttpStatus, Inject, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { CostItemService } from '../cost_item/cost_item.service';
 import { EventService } from '../event/event.service';
 import { CostListService } from './cost_list.service';
@@ -7,6 +8,7 @@ import { CreateCostListDto } from './dto/create-cost_list.dto';
 import { UpdateCostListDto } from './dto/update-cost_list.dto';
 
 @Controller('/api/v1/events/:event_id/cost-lists')
+@ApiTags('Cost List')
 export class CostListController {
   constructor(
     private readonly costListService: CostListService,

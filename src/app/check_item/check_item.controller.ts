@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req, Put, HttpCode, HttpStatus, forwardRef, Inject } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { CheckListService } from '../check_list/check_list.service';
 import { EventService } from '../event/event.service';
 import { CheckItemService } from './check_item.service';
@@ -7,6 +8,7 @@ import { CreateCheckItemDto } from './dto/create-check_item.dto';
 import { UpdateCheckItemDto } from './dto/update-check_item.dto';
 
 @Controller('/api/v1/events/:event_id/check-lists/:check_list_id/check-items')
+@ApiTags('Check Item')
 export class CheckItemController {
   constructor(
     private readonly checkItemService: CheckItemService,

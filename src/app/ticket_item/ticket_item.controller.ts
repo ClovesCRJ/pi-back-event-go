@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, forwardRef, Get, HttpCode, HttpStatus, Inject, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
 import { TicketListService } from '../ticket_list/ticket_list.service';
 import { CreateTicketItemDto } from './dto/create-ticket_item.dto';
@@ -7,6 +8,7 @@ import { UpdateTicketItemDto } from './dto/update-ticket_item.dto';
 import { TicketItemService } from './ticket_item.service';
 
 @Controller('/api/v1/events/:event_id/ticket-lists/:ticket_list_id/ticket-items')
+@ApiTags('Ticket Item')
 export class TicketItemController {
   constructor(
     private readonly ticketItemService: TicketItemService,

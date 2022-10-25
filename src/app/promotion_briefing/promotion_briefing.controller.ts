@@ -4,8 +4,10 @@ import { CreatePromotionBriefingDto } from './dto/create-promotion_briefing.dto'
 import { UpdatePromotionBriefingDto } from './dto/update-promotion_briefing.dto';
 import { EventService } from '../event/event.service';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/v1/events/:event_id/promotion-briefing')
+@ApiTags('Promotion Briefing')
 export class PromotionBriefingController {
   constructor(
     private readonly promotionBriefingService: PromotionBriefingService,

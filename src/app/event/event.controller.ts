@@ -9,9 +9,11 @@ import { MarketingBriefingService } from '../marketing_briefing/marketing_briefi
 import { PromotionBriefingService } from '../promotion_briefing/promotion_briefing.service';
 import { PublicBriefingService } from '../public_briefing/public_briefing.service';
 import { StrategyBriefingService } from '../strategy_briefing/strategy_briefing.service';
+import { ApiTags } from '@nestjs/swagger';
 // import { UpdateEventDto } from './dto/update-event.dto';
 
 @Controller('api/v1/events')
+@ApiTags('Event')
 export class EventController {
   constructor(
     private readonly eventService: EventService,

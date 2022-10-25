@@ -5,8 +5,10 @@ import { UpdatePublicBriefingDto } from './dto/update-public_briefing.dto';
 import { EventModule } from '../event/event.module';
 import { EventService } from '../event/event.service';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/v1/events/:event_id/public-briefing')
+@ApiTags('Public Briefing')
 export class PublicBriefingController {
   constructor(
     private readonly publicBriefingService: PublicBriefingService,
