@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, forwardRef, Get, HttpCode, HttpStatus, Inject, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
 import { TicketListService } from '../ticket_list/ticket_list.service';
 import { CreateTicketItemDto } from './dto/create-ticket_item.dto';
@@ -19,6 +19,10 @@ export class TicketItemController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Ingressos' })
+  @ApiResponse({ status: 200, description: 'Ingressos listados com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento ou Categoria de Ingressos não encontrados' })
   async findAll(
     @Param('event_id') event_id: string,
     @Param('ticket_list_id') ticket_list_id: string,
@@ -35,6 +39,10 @@ export class TicketItemController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Criar Ingresso' })
+  @ApiResponse({ status: 200, description: 'Ingresso criado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento ou Categoria de Ingressos não encontrados' })
   async create(
     @Param('event_id') event_id: string,
     @Param('ticket_list_id') ticket_list_id: string,
@@ -52,6 +60,10 @@ export class TicketItemController {
 
   @Get(':ticket_item_id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Ingresso' })
+  @ApiResponse({ status: 200, description: 'Ingresso listado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento, Categoria de Ingressos ou Ingresso não encontrados' })
   async findOne(
     @Param('event_id') event_id: string,
     @Param('ticket_list_id') ticket_list_id: string,
@@ -71,6 +83,10 @@ export class TicketItemController {
 
   @Put(':ticket_item_id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Editar Ingresso' })
+  @ApiResponse({ status: 200, description: 'Ingresso editado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento, Categoria de Ingressos ou Ingresso não encontrados' })
   async update(
     @Param('event_id') event_id: string,
     @Param('ticket_list_id') ticket_list_id: string,
@@ -94,6 +110,10 @@ export class TicketItemController {
   @Delete(':ticket_item_id')
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Remover Ingresso' })
+  @ApiResponse({ status: 200, description: 'Ingresso removido com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento, Categoria de Ingressos ou Ingresso não encontrados' })
   async remove(
     @Param('event_id') event_id: string,
     @Param('ticket_list_id') ticket_list_id: string,

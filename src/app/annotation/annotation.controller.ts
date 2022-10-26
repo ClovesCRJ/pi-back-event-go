@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
 import { AnnotationService } from './annotation.service';
 import { CreateAnnotationDto } from './dto/create-annotation.dto';
 import { UpdateAnnotationDto } from './dto/update-annotation.dto';
 
 @Controller('/api/v1/events/:event_id/annotations')
+@ApiTags('Annotations')
 export class AnnotationController {
   constructor(
     private readonly annotationService: AnnotationService,
@@ -14,6 +16,10 @@ export class AnnotationController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Criar Anotação' })
+  @ApiResponse({ status: 200, description: 'Anotação criada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async create(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -27,6 +33,10 @@ export class AnnotationController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Anotações' })
+  @ApiResponse({ status: 200, description: 'Anotações listadas com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findAll(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -39,6 +49,10 @@ export class AnnotationController {
 
   @Get(':annotation_id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Anotação' })
+  @ApiResponse({ status: 200, description: 'Anotação listada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento ou Anotação não encontrados' })
   async findOne(
     @Param('event_id') event_id: string,
     @Param('annotation_id') annotation_id: string,
@@ -54,6 +68,10 @@ export class AnnotationController {
 
   @Put(':annotation_id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Editar Anotação' })
+  @ApiResponse({ status: 200, description: 'Anotação editada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento ou Anotação não encontrados' })
   async update(
     @Param('event_id') event_id: string,
     @Param('annotation_id') annotation_id: string,
@@ -73,6 +91,10 @@ export class AnnotationController {
   @Delete(':annotation_id')
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Remover Anotação' })
+  @ApiResponse({ status: 200, description: 'Anotação removida com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento ou Anotação não encontrados' })
   async remove(
     @Param('event_id') event_id: string,
     @Param('annotation_id') annotation_id: string,

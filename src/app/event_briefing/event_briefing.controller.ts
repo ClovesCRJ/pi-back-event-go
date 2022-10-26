@@ -4,7 +4,7 @@ import { CreateEventBriefingDto } from './dto/create-event_briefing.dto';
 import { UpdateEventBriefingDto } from './dto/update-event_briefing.dto';
 import { EventService } from '../event/event.service';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/v1/events/:event_id/event-briefing')
 @ApiTags('Event Briefing')
@@ -17,6 +17,10 @@ export class EventBriefingController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Briefing do Evento' })
+  @ApiResponse({ status: 200, description: 'Briefing do Evento listado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findOne(@Param('event_id') event_id: string, @Req() req: any) {
     const event = await this.eventService.findOneBelong({
       relations: ["briefing.event_briefing"],
@@ -27,6 +31,10 @@ export class EventBriefingController {
 
   @Put()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Editar Briefing do Evento' })
+  @ApiResponse({ status: 200, description: 'Briefing do Evento editado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async update(
     @Param('event_id') event_id: string,
     @Body() updateEventBriefingDto: UpdateEventBriefingDto,

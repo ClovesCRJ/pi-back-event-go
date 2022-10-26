@@ -19,10 +19,10 @@ export class BookingItemController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Listar todas os BookingItems de uma BookingList' })
-  @ApiResponse({ status: 200, description: 'BookingItems listados com sucesso' })
+  @ApiOperation({ summary: 'Listar todas as Reservas de uma Lista de Reservas' })
+  @ApiResponse({ status: 200, description: 'Reservas listadas com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
-  @ApiResponse({ status: 404, description: 'Evento ou BookingList não encontrados' })
+  @ApiResponse({ status: 404, description: 'Evento ou Lista de Reservas não encontrados' })
   async findAll(
     @Param('event_id') event_id: string,
     @Param('booking_list_id') booking_list_id: string,
@@ -39,10 +39,10 @@ export class BookingItemController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Criar BookingItem' })
-  @ApiResponse({ status: 201, description: 'BookingItem criado com sucesso' })
+  @ApiOperation({ summary: 'Criar Reserva' })
+  @ApiResponse({ status: 201, description: 'Reserva criada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
-  @ApiResponse({ status: 404, description: 'Evento ou BookingList não encontrados' })
+  @ApiResponse({ status: 404, description: 'Evento ou Lista de Reservas não encontrados' })
   async create(
     @Param('event_id') event_id: string,
     @Param('booking_list_id') booking_list_id: string,
@@ -60,10 +60,10 @@ export class BookingItemController {
 
   @Get(':booking_item_id')
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Buscar BookingItem' })
-  @ApiResponse({ status: 200, description: 'BookingItem buscado com sucesso' })
+  @ApiOperation({ summary: 'Ver Reserva' })
+  @ApiResponse({ status: 200, description: 'Reserva encontrada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
-  @ApiResponse({ status: 404, description: 'Evento ou BookingList não encontrados' })
+  @ApiResponse({ status: 404, description: 'Evento ou Lista de Reservas não encontrados' })
   async findOne(
     @Param('event_id') event_id: string,
     @Param('booking_list_id') booking_list_id: string,
@@ -83,10 +83,10 @@ export class BookingItemController {
 
   @Put(':booking_item_id')
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Editar BookingItem' })
-  @ApiResponse({ status: 200, description: 'BookingItem editado com sucesso' })
+  @ApiOperation({ summary: 'Editar Reserva' })
+  @ApiResponse({ status: 200, description: 'Reserva editada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
-  @ApiResponse({ status: 404, description: 'Evento ou BookingList não encontrados' })
+  @ApiResponse({ status: 404, description: 'Evento ou Lista de Reservas não encontrados' })
   async update(
     @Param('event_id') event_id: string,
     @Param('booking_list_id') booking_list_id: string,
@@ -110,10 +110,10 @@ export class BookingItemController {
   @Delete(':booking_item_id')
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Remover BookingItem' })
-  @ApiResponse({ status: 200, description: 'BookingItem removido com sucesso' })
+  @ApiOperation({ summary: 'Remover Reserva' })
+  @ApiResponse({ status: 200, description: 'Reserva removida com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
-  @ApiResponse({ status: 404, description: 'Evento ou BookingList não encontrados' })
+  @ApiResponse({ status: 404, description: 'Evento ou Lista de Reservas não encontrados' })
   async remove(
     @Param('event_id') event_id: string,
     @Param('booking_list_id') booking_list_id: string,

@@ -9,7 +9,7 @@ import { MarketingBriefingService } from '../marketing_briefing/marketing_briefi
 import { PromotionBriefingService } from '../promotion_briefing/promotion_briefing.service';
 import { PublicBriefingService } from '../public_briefing/public_briefing.service';
 import { StrategyBriefingService } from '../strategy_briefing/strategy_briefing.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 // import { UpdateEventDto } from './dto/update-event.dto';
 
 @Controller('api/v1/events')
@@ -28,6 +28,9 @@ export class EventController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Criar Evento' })
+  @ApiResponse({ status: 201, description: 'Evento criado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   async create(@Body() postEventDto: PostEventDto, @Req() req: any) {
     const eventBriefing = await this.eventBriefingService.create({
       name: postEventDto.event_name,
@@ -53,12 +56,19 @@ export class EventController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Eventos' })
+  @ApiResponse({ status: 200, description: 'Eventos listados com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   async findAll(@Req() req: any) {
     return await this.eventService.findAllBelong(req.user.id);
   }
 
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Evento' })
+  @ApiResponse({ status: 200, description: 'Evento listado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findOne(@Param('id') id: string, @Req() req: any, @Query('relations') relations: any) {
     return await this.eventService.findOneBelong({
       relations,
@@ -69,6 +79,10 @@ export class EventController {
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Remover Evento' })
+  @ApiResponse({ status: 200, description: 'Evento removido com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async remove(@Param('id') id: string, @Req() req: any) {
     const event = await this.eventService.findOneBelong({
       relations: ["briefing"],

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
 import { CreateEventRevenueDto } from './dto/create-event_revenue.dto';
 import { UpdateEventRevenueDto } from './dto/update-event_revenue.dto';
@@ -16,6 +16,10 @@ export class EventRevenueController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Criar Receita de Evento' })
+  @ApiResponse({ status: 200, description: 'Receita de Evento criada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async create(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -29,6 +33,10 @@ export class EventRevenueController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Receitas de Evento' })
+  @ApiResponse({ status: 200, description: 'Receitas de Evento listadas com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findAll(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -41,6 +49,10 @@ export class EventRevenueController {
 
   @Get(':event_revenue_id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Receita de Evento' })
+  @ApiResponse({ status: 200, description: 'Receita de Evento listada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findOne(
     @Param('event_id') event_id: string,
     @Param('event_revenue_id') event_revenue_id: string,
@@ -56,6 +68,10 @@ export class EventRevenueController {
 
   @Put(':event_revenue_id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Editar Receita de Evento' })
+  @ApiResponse({ status: 200, description: 'Receita de Evento editada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async update(
     @Param('event_id') event_id: string,
     @Param('event_revenue_id') event_revenue_id: string,
@@ -75,6 +91,10 @@ export class EventRevenueController {
   @Delete(':event_revenue_id')
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Remover Receita de Evento' })
+  @ApiResponse({ status: 200, description: 'Receita de Evento removida com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async remove(
     @Param('event_id') event_id: string,
     @Param('event_revenue_id') event_revenue_id: string,

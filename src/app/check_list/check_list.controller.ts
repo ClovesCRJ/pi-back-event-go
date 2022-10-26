@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req, Put, HttpCode, HttpStatus, Inject, forwardRef } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CheckItemService } from '../check_item/check_item.service';
 import { EventService } from '../event/event.service';
 import { CheckListService } from './check_list.service';
@@ -19,6 +19,10 @@ export class CheckListController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Criar Check-List' })
+  @ApiResponse({ status: 200, description: 'Check-List criada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async create(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -32,6 +36,10 @@ export class CheckListController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Check-Lists' })
+  @ApiResponse({ status: 200, description: 'Check-Lists listadas com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findAll(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -44,6 +52,10 @@ export class CheckListController {
 
   @Get(':check_list_id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Check-List' })
+  @ApiResponse({ status: 200, description: 'Check-List listada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento ou Check-List não encontrado' })
   async findOne(
     @Param('event_id') event_id: string,
     @Param('check_list_id') check_list_id: string,
@@ -60,6 +72,10 @@ export class CheckListController {
 
   @Put(':check_list_id')
   @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Editar Check-List' })
+  @ApiResponse({ status: 200, description: 'Check-List editada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento ou Check-List não encontrado' })
   async update(
     @Param('event_id') event_id: string,
     @Param('check_list_id') check_list_id: string,
@@ -79,6 +95,10 @@ export class CheckListController {
   @Delete(':check_list_id')
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Remover Check-List' })
+  @ApiResponse({ status: 200, description: 'Check-List remover com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento ou Check-List não encontrado' })
   async remove(
     @Param('event_id') event_id: string,
     @Param('check_list_id') check_list_id: string,
