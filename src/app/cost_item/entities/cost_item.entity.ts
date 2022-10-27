@@ -10,7 +10,9 @@ export class CostItem {
   @Column()
   cost_list_id: string;
 
-  @ManyToOne(() => CostList, cost_list => cost_list.cost_items)
+  @ManyToOne(() => CostList, cost_list => cost_list.cost_items, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "cost_list_id" })
   cost_list: CostList;
 

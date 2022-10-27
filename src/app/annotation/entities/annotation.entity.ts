@@ -9,7 +9,9 @@ export class Annotation {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.annotations)
+  @ManyToOne(() => Event, event => event.annotations, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "event_id" })
   event: Event;
 

@@ -13,7 +13,6 @@ export class CostItemController {
   constructor(
     private readonly costItemService: CostItemService,
     private readonly eventService: EventService,
-    @Inject(forwardRef(() => CostListService))
     private readonly costListService: CostListService,
   ) {}
 

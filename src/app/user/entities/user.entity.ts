@@ -11,10 +11,14 @@ export class User {
   @Column()
   first_name: string;
 
-  @OneToMany(() => Event, event => event.owner)
+  @OneToMany(() => Event, event => event.owner, {
+    cascade: ["remove"],
+  })
   events: Event[];
 
-  @OneToMany(() => UserPermission, user_permisison => user_permisison.user)
+  @OneToMany(() => UserPermission, user_permisison => user_permisison.user, {
+    cascade: ["remove"],
+  })
   user_permissions: UserPermission[];
 
   @Column()

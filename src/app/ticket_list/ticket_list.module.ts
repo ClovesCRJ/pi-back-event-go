@@ -10,7 +10,6 @@ import { TicketListService } from './ticket_list.service';
   imports: [
     TypeOrmModule.forFeature([TicketList]),
     EventModule,
-    forwardRef(() => TicketItemModule),
   ],
   exports: [TicketListService],
   controllers: [TicketListController],

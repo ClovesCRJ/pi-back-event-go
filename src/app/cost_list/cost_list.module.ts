@@ -10,7 +10,6 @@ import { CostItemModule } from '../cost_item/cost_item.module';
   imports: [
     TypeOrmModule.forFeature([CostList]),
     EventModule,
-    forwardRef(() => CostItemModule),
   ],
   exports: [CostListService],
   controllers: [CostListController],

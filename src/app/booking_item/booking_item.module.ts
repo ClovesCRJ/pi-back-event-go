@@ -10,7 +10,7 @@ import { BookingItem } from './entities/booking_item.entity';
   imports: [
     TypeOrmModule.forFeature([BookingItem]),
     EventModule,
-    forwardRef(() => BookingListModule),
+    BookingListModule,
   ],
   exports: [BookingItemService],
   controllers: [BookingItemController],

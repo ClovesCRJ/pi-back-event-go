@@ -12,8 +12,6 @@ import { UpdateBookingListDto } from './dto/update-booking_list.dto';
 export class BookingListController {
   constructor(
     private readonly bookingListService: BookingListService,
-    @Inject(forwardRef(() => BookingItemService))
-    private readonly bookingItemService: BookingItemService,
     private readonly eventService: EventService,
   ) {}
 
@@ -111,12 +109,6 @@ export class BookingListController {
       relations: ["booking_items"],
       where: { id: booking_list_id, event_id: event.id },
     });
-    for (const booking_item in bookingList.booking_items) {
-      if (Object.prototype.hasOwnProperty.call(bookingList.booking_items, booking_item)) {
-        const item = bookingList.booking_items[booking_item];
-        await this.bookingItemService.remove(item.id, bookingList.id);
-      }
-    }
-    return await this.bookingListService.remove(booking_list_id);
+    return await this.bookingListService.remove(bookingList.id);
   }
 }

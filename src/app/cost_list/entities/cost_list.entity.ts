@@ -11,7 +11,9 @@ export class CostList {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.cost_lists)
+  @ManyToOne(() => Event, event => event.cost_lists, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "event_id" })
   event: Event;
 

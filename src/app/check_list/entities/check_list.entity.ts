@@ -11,7 +11,9 @@ export class CheckList {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.check_lists)
+  @ManyToOne(() => Event, event => event.check_lists, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "event_id" })
   event: Event;
 

@@ -12,8 +12,6 @@ import { UpdateCostListDto } from './dto/update-cost_list.dto';
 export class CostListController {
   constructor(
     private readonly costListService: CostListService,
-    @Inject(forwardRef(() => CostItemService))
-    private readonly costItemService: CostItemService,
     private readonly eventService: EventService,
   ) {}
 
@@ -111,12 +109,6 @@ export class CostListController {
       relations: ["cost_items"],
       where: { id: cost_list_id, event_id: event.id },
     });
-    for (const cost_item in cost_list.cost_items) {
-      if (Object.prototype.hasOwnProperty.call(cost_list.cost_items, cost_item)) {
-        const item = cost_list.cost_items[cost_item];
-        await this.costItemService.remove(item.id, cost_list.id);
-      }
-    }
-    return await this.costListService.remove(cost_list_id);
+    return await this.costListService.remove(cost_list.id);
   }
 }

@@ -10,7 +10,6 @@ import { PromotionBriefingService } from '../promotion_briefing/promotion_briefi
 import { PublicBriefingService } from '../public_briefing/public_briefing.service';
 import { StrategyBriefingService } from '../strategy_briefing/strategy_briefing.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-// import { UpdateEventDto } from './dto/update-event.dto';
 
 @Controller('api/v1/events')
 @ApiTags('Event')
@@ -31,6 +30,7 @@ export class EventController {
   @ApiOperation({ summary: 'Criar Evento' })
   @ApiResponse({ status: 201, description: 'Evento criado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (event_name)' })
   async create(@Body() postEventDto: PostEventDto, @Req() req: any) {
     const eventBriefing = await this.eventBriefingService.create({
       name: postEventDto.event_name,
@@ -80,25 +80,16 @@ export class EventController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Evento' })
-  @ApiResponse({ status: 200, description: 'Evento removido com sucesso' })
+  @ApiResponse({ status: 204, description: 'Evento removido com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async remove(@Param('id') id: string, @Req() req: any) {
     const event = await this.eventService.findOneBelong({
-      relations: ["briefing"],
       where: { id, owner_id: req.user.id },
     });
 
     const eventResult = await this.eventService.delete(event.id);
     
-    const briefingResult = await this.briefingService.delete(event.briefing_id);
-
-    const eventBriefingResult = await this.eventBriefingService.delete(event.briefing.event_briefing_id);
-    const publicBriefingResult = await this.publicBriefingService.delete(event.briefing.public_briefing_id);
-    const marketingBriefingResult = await this.marketingBriefingService.delete(event.briefing.marketing_briefing_id);
-    const strategyBriefingResult = await this.strategyBriefingService.delete(event.briefing.strategy_briefing_id);
-    const promotionBriefingResult = await this.promotionBriefingService.delete(event.briefing.promotion_briefing_id);
-
     return eventResult;
   }
 }

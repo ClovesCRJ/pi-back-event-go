@@ -1,10 +1,14 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Briefing } from "src/app/briefing/entities/briefing.entity";
+import { Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 
 @Entity("event_briefings")
 export class EventBriefing {
   @PrimaryColumn()
   id: string;
+
+  @OneToOne(() => Briefing, briefing => briefing.event_briefing, { onDelete: "CASCADE" })
+  briefing: Briefing;
 
   @Column()
   name: string;

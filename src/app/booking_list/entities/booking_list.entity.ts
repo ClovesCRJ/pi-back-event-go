@@ -10,7 +10,9 @@ export class BookingList {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.booking_lists)
+  @ManyToOne(() => Event, event => event.booking_lists, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "event_id" })
   event: Event;
 

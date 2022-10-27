@@ -13,7 +13,7 @@ export class UserController {
   @Post()
   @ApiOperation({ summary: 'Criar usuário com email e senha' })
   @ApiResponse({ status: 201, description: 'Usuário criado com sucesso' })
-  @ApiResponse({ status: 403, description: 'Senha inválida' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (senha, email, first_name ou last_name' })
   async create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
@@ -39,8 +39,9 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Editar usuário' })
-  @ApiResponse({ status: 200, description: 'Usuário editado com sucesso' })
+  @ApiResponse({ status: 204, description: 'Usuário editado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Usuário não encontrado' })
   async update(@Param('id', new ParseUUIDPipe) id: string, @Body() updateUserDto: UpdateUserDto) {
     // TODO: Check if is the same user logged
     return await this.userService.update(id, updateUserDto);
@@ -50,8 +51,9 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Remover usuário' })
-  @ApiResponse({ status: 200, description: 'Usuário removido com sucesso' })
+  @ApiResponse({ status: 204, description: 'Usuário removido com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Usuário não encontrado' })
   async remove(@Param('id', new ParseUUIDPipe) id: string) {
     // TODO: Check if is the same user logged
     return await this.userService.remove(id);

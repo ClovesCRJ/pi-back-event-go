@@ -10,7 +10,6 @@ import { CheckItemModule } from '../check_item/check_item.module';
   imports: [
     TypeOrmModule.forFeature([CheckList]),
     EventModule,
-    forwardRef(() => CheckItemModule),
   ],
   controllers: [CheckListController],
   providers: [CheckListService],

@@ -9,7 +9,9 @@ export class CashInFlow {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.cash_in_flows)
+  @ManyToOne(() => Event, event => event.cash_in_flows, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "event_id" })
   event: Event;
 

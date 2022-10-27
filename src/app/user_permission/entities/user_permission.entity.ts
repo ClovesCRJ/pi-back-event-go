@@ -11,14 +11,18 @@ export class UserPermission {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "user_id" })
   user: User;
 
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event)
+  @ManyToOne(() => Event, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "event_id" })
   event: Event;
 

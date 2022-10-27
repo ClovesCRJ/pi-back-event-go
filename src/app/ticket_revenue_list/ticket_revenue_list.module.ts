@@ -10,7 +10,6 @@ import { TicketRevenueModule } from '../ticket_revenue/ticket_revenue.module';
   imports: [
     TypeOrmModule.forFeature([TicketRevenueList]),
     EventModule,
-    forwardRef(() => TicketRevenueModule),
   ],
   controllers: [TicketRevenueListController],
   providers: [TicketRevenueListService],

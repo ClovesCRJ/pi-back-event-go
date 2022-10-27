@@ -10,7 +10,9 @@ export class CheckItem {
   @Column()
   check_list_id: string;
 
-  @ManyToOne(() => CheckList, check_list => check_list.check_items)
+  @ManyToOne(() => CheckList, check_list => check_list.check_items, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "check_list_id" })
   check_list: CheckList;
 

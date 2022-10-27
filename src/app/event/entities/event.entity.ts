@@ -21,44 +21,66 @@ export class Event {
   @Column()
   owner_id: string;
 
-  @ManyToOne(() => User, user => user.events)
+  @ManyToOne(() => User, user => user.events, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "owner_id" })
   owner: User;
 
-  @OneToMany(() => UserPermission, user_permission => user_permission.event)
+  @OneToMany(() => UserPermission, user_permission => user_permission.event, {
+    cascade: true,
+  })
   user_permissions: UserPermission[];
 
-  @OneToMany(() => CheckList, check_list => check_list.event)
+  @OneToMany(() => CheckList, check_list => check_list.event, {
+    cascade: ["remove"],
+  })
   check_lists: CheckList[];
 
-  @OneToMany(() => CostList, cost_list => cost_list.event)
+  @OneToMany(() => CostList, cost_list => cost_list.event, {
+    cascade: ["remove"],
+  })
   cost_lists: CostList[];
 
-  @OneToMany(() => TicketRevenueList, ticket_revenue_list => ticket_revenue_list.event)
+  @OneToMany(() => TicketRevenueList, ticket_revenue_list => ticket_revenue_list.event, {
+    cascade: ["remove"],
+  })
   ticket_revenue_lists: TicketRevenueList[];
 
-  @OneToMany(() => EventRevenue, event_revenue => event_revenue.event)
+  @OneToMany(() => EventRevenue, event_revenue => event_revenue.event, {
+    cascade: ["remove"],
+  })
   event_revenues: EventRevenue[];
 
-  @OneToMany(() => CashInFlow, cash_in_flow => cash_in_flow.event)
+  @OneToMany(() => CashInFlow, cash_in_flow => cash_in_flow.event, {
+    cascade: ["remove"],
+  })
   cash_in_flows: CashInFlow[];
 
-  @OneToMany(() => CashOutFlow, cash_out_flow => cash_out_flow.event)
+  @OneToMany(() => CashOutFlow, cash_out_flow => cash_out_flow.event, {
+    cascade: ["remove"],
+  })
   cash_out_flows: CashOutFlow[];
 
-  @OneToMany(() => BookingList, booking_list => booking_list.event)
+  @OneToMany(() => BookingList, booking_list => booking_list.event, {
+    cascade: ["remove"],
+  })
   booking_lists: BookingList[];
 
-  @OneToMany(() => TicketList, ticket_list => ticket_list.event)
+  @OneToMany(() => TicketList, ticket_list => ticket_list.event, {
+    cascade: ["remove"],
+  })
   ticket_lists: TicketList[];
 
-  @OneToMany(() => Annotation, annotation => annotation.event)
+  @OneToMany(() => Annotation, annotation => annotation.event, {
+    cascade: ["remove"],
+  })
   annotations: Annotation[];
 
   @Column()
   briefing_id: string;
 
-  @OneToOne(() => Briefing)
+  @OneToOne(() => Briefing, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: "briefing_id" })
   briefing: Briefing;
 

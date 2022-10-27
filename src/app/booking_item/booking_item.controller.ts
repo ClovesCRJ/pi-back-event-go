@@ -13,7 +13,6 @@ export class BookingItemController {
   constructor(
     private readonly bookingItemService: BookingItemService,
     private readonly eventService: EventService,
-    @Inject(forwardRef(() => BookingListService))
     private readonly bookingListService: BookingListService,
   ) {}
 

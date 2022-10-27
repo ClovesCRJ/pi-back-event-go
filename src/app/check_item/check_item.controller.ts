@@ -13,7 +13,6 @@ export class CheckItemController {
   constructor(
     private readonly checkItemService: CheckItemService,
     private readonly eventService: EventService,
-    @Inject(forwardRef(() => CheckListService))
     private readonly checkListService: CheckListService,
   ) {}
 

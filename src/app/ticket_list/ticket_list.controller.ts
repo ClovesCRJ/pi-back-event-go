@@ -12,8 +12,6 @@ import { TicketListService } from './ticket_list.service';
 export class TicketListController {
   constructor(
     private readonly ticketListService: TicketListService,
-    @Inject(forwardRef(() => TicketItemService))
-    private readonly ticketItemService: TicketItemService,
     private readonly eventService: EventService,
   ) {}
 
@@ -111,12 +109,6 @@ export class TicketListController {
       relations: ["ticket_items"],
       where: { id: ticket_list_id, event_id: event.id },
     });
-    for (const ticket_item in ticketList.ticket_items) {
-      if (Object.prototype.hasOwnProperty.call(ticketList.ticket_items, ticket_item)) {
-        const item = ticketList.ticket_items[ticket_item];
-        await this.ticketItemService.remove(item.id, ticketList.id);
-      }
-    }
-    return await this.ticketListService.remove(ticket_list_id);
+    return await this.ticketListService.remove(ticketList.id);
   }
 }

@@ -10,7 +10,9 @@ export class TicketRevenue {
   @Column()
   ticket_revenue_list_id: string;
 
-  @ManyToOne(() => TicketRevenueList, ticket_revenue_list => ticket_revenue_list.ticket_revenues)
+  @ManyToOne(() => TicketRevenueList, ticket_revenue_list => ticket_revenue_list.ticket_revenues, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "ticket_revenue_list_id" })
   ticket_revenue_list: TicketRevenueList;
 

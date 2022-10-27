@@ -9,7 +9,9 @@ export class BookingItem {
   @Column()
   booking_list_id: string;
 
-  @ManyToOne(() => BookingList, booking_list => booking_list.booking_items)
+  @ManyToOne(() => BookingList, booking_list => booking_list.booking_items, {
+    onDelete: "CASCADE", orphanedRowAction: 'delete'
+  })
   @JoinColumn({ name: "booking_list_id" })
   booking_list: BookingList;
 

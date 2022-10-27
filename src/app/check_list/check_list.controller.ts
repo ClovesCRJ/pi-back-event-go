@@ -12,8 +12,6 @@ import { UpdateCheckListDto } from './dto/update-check_list.dto';
 export class CheckListController {
   constructor(
     private readonly checkListService: CheckListService,
-    @Inject(forwardRef(() => CheckItemService))
-    private readonly checkItemService: CheckItemService,
     private readonly eventService: EventService,
   ) {}
 
@@ -111,12 +109,6 @@ export class CheckListController {
       relations: ["check_items"],
       where: { id: check_list_id, event_id: event.id },
     });
-    for (const check_item in check_list.check_items) {
-      if (Object.prototype.hasOwnProperty.call(check_list.check_items, check_item)) {
-        const item = check_list.check_items[check_item];
-        await this.checkItemService.remove(item.id, check_list.id);
-      }
-    }
-    return await this.checkListService.remove(check_list_id);
+    return await this.checkListService.remove(check_list.id);
   }
 }
