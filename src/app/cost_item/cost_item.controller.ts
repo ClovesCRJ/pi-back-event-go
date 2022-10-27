@@ -8,7 +8,7 @@ import { CreateCostItemDto } from './dto/create-cost_item.dto';
 import { UpdateCostItemDto } from './dto/update-cost_item.dto';
 
 @Controller('/api/v1/events/:event_id/cost-lists/:cost_list_id/cost-items')
-@ApiTags('Cost Item')
+@ApiTags('Custos')
 export class CostItemController {
   constructor(
     private readonly costItemService: CostItemService,
@@ -39,9 +39,10 @@ export class CostItemController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Criar Custo' })
-  @ApiResponse({ status: 200, description: 'Custo criado com sucesso' })
+  @ApiResponse({ status: 201, description: 'Custo criado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Categoria de Custos não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name, quantity, value)' })
   async create(
     @Param('event_id') event_id: string,
     @Param('cost_list_id') cost_list_id: string,
@@ -86,6 +87,7 @@ export class CostItemController {
   @ApiResponse({ status: 200, description: 'Custo editado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento, Categoria de Custos ou Custo não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name, quantity, value)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('cost_list_id') cost_list_id: string,
@@ -110,7 +112,7 @@ export class CostItemController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Custo' })
-  @ApiResponse({ status: 200, description: 'Custo removido com sucesso' })
+  @ApiResponse({ status: 204, description: 'Custo removido com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento, Categoria de Custos ou Custo não encontrados' })
   async remove(

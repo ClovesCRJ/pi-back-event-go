@@ -6,7 +6,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('api/v1/users')
-@ApiTags('User')
+@ApiTags('Usuários')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

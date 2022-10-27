@@ -7,7 +7,7 @@ import { CreateCashInFlowDto } from './dto/create-cash_in_flow.entity';
 import { UpdateCashInFlowDto } from './dto/update-cash_in_flow.entity';
 
 @Controller('/api/v1/events/:event_id/cash-in-flows')
-@ApiTags('CashIn Flow')
+@ApiTags('Entradas de Caixa')
 export class CashInFlowController {
   constructor(
     private readonly cashInFlowService: CashInFlowService,
@@ -17,9 +17,10 @@ export class CashInFlowController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Criar Entrada de Caixa' })
-  @ApiResponse({ status: 200, description: 'Entrada de Caixa criada com sucesso' })
+  @ApiResponse({ status: 201, description: 'Entrada de Caixa criada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (description, amount, date)' })
   async create(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -72,6 +73,7 @@ export class CashInFlowController {
   @ApiResponse({ status: 200, description: 'Entrada de Caixa editada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Entrada de Caixa não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (description, amount, date)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('cash_in_flow_id') cash_in_flow_id: string,
@@ -92,7 +94,7 @@ export class CashInFlowController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Entrada de Caixa' })
-  @ApiResponse({ status: 200, description: 'Entrada de Caixa removida com sucesso' })
+  @ApiResponse({ status: 204, description: 'Entrada de Caixa removida com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Entrada de Caixa não encontrados' })
   async remove(

@@ -8,7 +8,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/v1/events/:event_id/public-briefing')
-@ApiTags('Public Briefing')
+@ApiTags('Briefing de Público')
 export class PublicBriefingController {
   constructor(
     private readonly publicBriefingService: PublicBriefingService,

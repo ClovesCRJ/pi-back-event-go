@@ -8,7 +8,7 @@ import { UpdateTicketListDto } from './dto/update-ticket_list.dto';
 import { TicketListService } from './ticket_list.service';
 
 @Controller('/api/v1/events/:event_id/ticket-lists')
-@ApiTags('Ticket List')
+@ApiTags('Categoria de Ingressos')
 export class TicketListController {
   constructor(
     private readonly ticketListService: TicketListService,
@@ -18,9 +18,10 @@ export class TicketListController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Criar Categoria de Ingressos' })
-  @ApiResponse({ status: 200, description: 'Categoria de Ingressos criada com sucesso' })
+  @ApiResponse({ status: 201, description: 'Categoria de Ingressos criada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name)' })
   async create(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -74,6 +75,7 @@ export class TicketListController {
   @ApiResponse({ status: 200, description: 'Categoria de Ingressos editada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Categoria de Ingressos não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('ticket_list_id') ticket_list_id: string,
@@ -94,7 +96,7 @@ export class TicketListController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Categoria de Ingressos' })
-  @ApiResponse({ status: 200, description: 'Categoria de Ingressos removida com sucesso' })
+  @ApiResponse({ status: 204, description: 'Categoria de Ingressos removida com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Categoria de Ingressos não encontrados' })
   async remove(

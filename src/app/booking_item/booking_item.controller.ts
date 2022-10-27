@@ -8,7 +8,7 @@ import { CreateBookingItemDto } from './dto/create-booking_item.dto';
 import { UpdateBookingItemDto } from './dto/update-booking_item.dto';
 
 @Controller('/api/v1/events/:event_id/booking-lists/:booking_list_id/booking-items')
-@ApiTags('Booking Items')
+@ApiTags('Reservas')
 export class BookingItemController {
   constructor(
     private readonly bookingItemService: BookingItemService,
@@ -42,6 +42,7 @@ export class BookingItemController {
   @ApiResponse({ status: 201, description: 'Reserva criada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Lista de Reservas não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (code, value)' })
   async create(
     @Param('event_id') event_id: string,
     @Param('booking_list_id') booking_list_id: string,
@@ -86,6 +87,7 @@ export class BookingItemController {
   @ApiResponse({ status: 200, description: 'Reserva editada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Lista de Reservas não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (code, value)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('booking_list_id') booking_list_id: string,
@@ -110,7 +112,7 @@ export class BookingItemController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Reserva' })
-  @ApiResponse({ status: 200, description: 'Reserva removida com sucesso' })
+  @ApiResponse({ status: 204, description: 'Reserva removida com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Lista de Reservas não encontrados' })
   async remove(

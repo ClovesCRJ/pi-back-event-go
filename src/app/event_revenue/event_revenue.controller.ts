@@ -7,7 +7,7 @@ import { UpdateEventRevenueDto } from './dto/update-event_revenue.dto';
 import { EventRevenueService } from './event_revenue.service';
 
 @Controller('/api/v1/events/:event_id/event-revenues')
-@ApiTags('Event Revenue')
+@ApiTags('Receitas de Evento')
 export class EventRevenueController {
   constructor(
     private readonly eventRevenueService: EventRevenueService,
@@ -17,9 +17,10 @@ export class EventRevenueController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Criar Receita de Evento' })
-  @ApiResponse({ status: 200, description: 'Receita de Evento criada com sucesso' })
+  @ApiResponse({ status: 201, description: 'Receita de Evento criada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name, value_unit, quantity)' })
   async create(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -72,6 +73,7 @@ export class EventRevenueController {
   @ApiResponse({ status: 200, description: 'Receita de Evento editada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name, value_unit, quantity)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('event_revenue_id') event_revenue_id: string,
@@ -92,7 +94,7 @@ export class EventRevenueController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Receita de Evento' })
-  @ApiResponse({ status: 200, description: 'Receita de Evento removida com sucesso' })
+  @ApiResponse({ status: 204, description: 'Receita de Evento removida com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async remove(

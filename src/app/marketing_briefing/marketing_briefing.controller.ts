@@ -7,7 +7,7 @@ import { EventService } from '../event/event.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/v1/events/:event_id/marketing-briefing')
-@ApiTags('Marketing Briefing')
+@ApiTags('Briefing de Pesquisa de Mercado e Concorrentes')
 export class MarketingBriefingController {
   constructor(
     private readonly marketingBriefingService: MarketingBriefingService,
@@ -17,8 +17,8 @@ export class MarketingBriefingController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Listar Briefing de Marketing' })
-  @ApiResponse({ status: 200, description: 'Briefing de Marketing listado com sucesso' })
+  @ApiOperation({ summary: 'Listar Briefing de Pesquisa de Mercado e Concorrentes' })
+  @ApiResponse({ status: 200, description: 'Briefing de Pesquisa de Mercado e Concorrentes listado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findOne(@Param('event_id') event_id: string, @Req() req: any) {
@@ -31,8 +31,8 @@ export class MarketingBriefingController {
 
   @Put()
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Editar Briefing de Marketing' })
-  @ApiResponse({ status: 200, description: 'Briefing de Marketing editado com sucesso' })
+  @ApiOperation({ summary: 'Editar Briefing de Pesquisa de Mercado e Concorrentes' })
+  @ApiResponse({ status: 200, description: 'Briefing de Pesquisa de Mercado e Concorrentes editado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async update(

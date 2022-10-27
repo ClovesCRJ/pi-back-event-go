@@ -7,7 +7,7 @@ import { CreateCashOutFlowDto } from './dto/create-cash_out_flow.entity';
 import { UpdateCashOutFlowDto } from './dto/update-cash_out_flow.entity';
 
 @Controller('/api/v1/events/:event_id/cash-out-flows')
-@ApiTags('CashOut Flow')
+@ApiTags('Saídas de Caixa')
 export class CashOutFlowController {
   constructor(
     private readonly cashOutFlowService: CashOutFlowService,
@@ -17,9 +17,10 @@ export class CashOutFlowController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Criar Saída de Caixa' })
-  @ApiResponse({ status: 200, description: 'Saída de Caixa criada com sucesso' })
+  @ApiResponse({ status: 201, description: 'Saída de Caixa criada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (description, amount, date)' })
   async create(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -72,6 +73,7 @@ export class CashOutFlowController {
   @ApiResponse({ status: 200, description: 'Saída de Caixa editada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Saída de Caixa não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (description, amount, date)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('cash_out_flow_id') cash_out_flow_id: string,
@@ -91,7 +93,7 @@ export class CashOutFlowController {
   @Delete(':cash_out_flow_id')
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Remover Saída de Caixa' })
-  @ApiResponse({ status: 200, description: 'Saída de Caixa removida com sucesso' })
+  @ApiResponse({ status: 204, description: 'Saída de Caixa removida com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Saída de Caixa não encontrados' })
   @HttpCode(HttpStatus.NO_CONTENT)

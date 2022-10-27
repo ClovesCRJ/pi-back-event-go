@@ -8,7 +8,7 @@ import { UpdateTicketItemDto } from './dto/update-ticket_item.dto';
 import { TicketItemService } from './ticket_item.service';
 
 @Controller('/api/v1/events/:event_id/ticket-lists/:ticket_list_id/ticket-items')
-@ApiTags('Ticket Item')
+@ApiTags('Ingressos')
 export class TicketItemController {
   constructor(
     private readonly ticketItemService: TicketItemService,
@@ -39,9 +39,10 @@ export class TicketItemController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Criar Ingresso' })
-  @ApiResponse({ status: 200, description: 'Ingresso criado com sucesso' })
+  @ApiResponse({ status: 201, description: 'Ingresso criado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Categoria de Ingressos não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name, sale_value, quantity_sold)' })
   async create(
     @Param('event_id') event_id: string,
     @Param('ticket_list_id') ticket_list_id: string,
@@ -86,6 +87,7 @@ export class TicketItemController {
   @ApiResponse({ status: 200, description: 'Ingresso editado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento, Categoria de Ingressos ou Ingresso não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name, sale_value, quantity_sold)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('ticket_list_id') ticket_list_id: string,
@@ -110,7 +112,7 @@ export class TicketItemController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Ingresso' })
-  @ApiResponse({ status: 200, description: 'Ingresso removido com sucesso' })
+  @ApiResponse({ status: 204, description: 'Ingresso removido com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento, Categoria de Ingressos ou Ingresso não encontrados' })
   async remove(

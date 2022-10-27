@@ -18,9 +18,10 @@ export class CheckListController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Criar Check-List' })
-  @ApiResponse({ status: 200, description: 'Check-List criada com sucesso' })
+  @ApiResponse({ status: 201, description: 'Check-List criada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name)' })
   async create(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -74,6 +75,7 @@ export class CheckListController {
   @ApiResponse({ status: 200, description: 'Check-List editada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Check-List não encontrado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('check_list_id') check_list_id: string,
@@ -94,7 +96,7 @@ export class CheckListController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Check-List' })
-  @ApiResponse({ status: 200, description: 'Check-List remover com sucesso' })
+  @ApiResponse({ status: 204, description: 'Check-List remover com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Check-List não encontrado' })
   async remove(

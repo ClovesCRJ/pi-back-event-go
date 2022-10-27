@@ -1,13 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Inject, forwardRef, UseGuards, Put } from '@nestjs/common';
+import { Controller, Get, Body, Param, Req, Inject, forwardRef, UseGuards, Put } from '@nestjs/common';
 import { EventBriefingService } from './event_briefing.service';
-import { CreateEventBriefingDto } from './dto/create-event_briefing.dto';
 import { UpdateEventBriefingDto } from './dto/update-event_briefing.dto';
 import { EventService } from '../event/event.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/v1/events/:event_id/event-briefing')
-@ApiTags('Event Briefing')
+@ApiTags('Briefing do Evento')
 export class EventBriefingController {
   constructor(
     private readonly eventBriefingService: EventBriefingService,
@@ -35,6 +34,7 @@ export class EventBriefingController {
   @ApiResponse({ status: 200, description: 'Briefing do Evento editado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name)' })
   async update(
     @Param('event_id') event_id: string,
     @Body() updateEventBriefingDto: UpdateEventBriefingDto,

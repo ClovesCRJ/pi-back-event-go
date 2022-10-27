@@ -8,7 +8,7 @@ import { CreateCheckItemDto } from './dto/create-check_item.dto';
 import { UpdateCheckItemDto } from './dto/update-check_item.dto';
 
 @Controller('/api/v1/events/:event_id/check-lists/:check_list_id/check-items')
-@ApiTags('Check Item')
+@ApiTags('Itens da Check-List')
 export class CheckItemController {
   constructor(
     private readonly checkItemService: CheckItemService,
@@ -18,8 +18,8 @@ export class CheckItemController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Listar Items da Check-List' })
-  @ApiResponse({ status: 200, description: 'Items listados com sucesso' })
+  @ApiOperation({ summary: 'Listar Itens da Check-List' })
+  @ApiResponse({ status: 200, description: 'Itens da Check-List listados com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Check-List não encontrados' })
   async findAll(
@@ -38,10 +38,11 @@ export class CheckItemController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Criar Items de Check-List' })
-  @ApiResponse({ status: 200, description: 'Item criado com sucesso' })
+  @ApiOperation({ summary: 'Criar Itens de Check-List' })
+  @ApiResponse({ status: 201, description: 'Item criado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Check-List não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name)' })
   async create(
     @Param('event_id') event_id: string,
     @Param('check_list_id') check_list_id: string,
@@ -86,6 +87,7 @@ export class CheckItemController {
   @ApiResponse({ status: 200, description: 'Item editado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento, Check-List ou Item não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('check_list_id') check_list_id: string,
@@ -110,7 +112,7 @@ export class CheckItemController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Item de Check-List' })
-  @ApiResponse({ status: 200, description: 'Item removido com sucesso' })
+  @ApiResponse({ status: 204, description: 'Item removido com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento, Check-List ou Item não encontrados' })
   async remove(

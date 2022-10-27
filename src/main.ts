@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   const config = new DocumentBuilder()
     .setTitle('EventsGo V1 API')
-    .setDescription('Documentação da api do Projeto Integrado')
+    .setDescription('Documentação da api do Sistema de Gerenciamento de Produção de Eventos desenvolvido para o Projeto Integrado (Trabalho de Conclusão de Curso) da especialização em Desenvolvimento Web Full Stack da PUC Minas Virtual pelo aluno Cloves Rodrigues Junior')
     .setVersion('1.0.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

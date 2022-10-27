@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, HttpCode, HttpStatus, Inject, forwardRef, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Req, HttpCode, HttpStatus, Inject, forwardRef, Query } from '@nestjs/common';
 import { EventService } from './event.service';
-import { CreateEventDto } from './dto/create-event.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { PostEventDto } from './dto/post-event.dto';
 import { BriefingService } from '../briefing/briefing.service';
@@ -12,7 +11,7 @@ import { StrategyBriefingService } from '../strategy_briefing/strategy_briefing.
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('api/v1/events')
-@ApiTags('Event')
+@ApiTags('Eventos')
 export class EventController {
   constructor(
     private readonly eventService: EventService,

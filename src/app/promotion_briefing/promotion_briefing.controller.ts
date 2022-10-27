@@ -7,7 +7,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/v1/events/:event_id/promotion-briefing')
-@ApiTags('Promotion Briefing')
+@ApiTags('Briefing de Divulgação e Detalhamento')
 export class PromotionBriefingController {
   constructor(
     private readonly promotionBriefingService: PromotionBriefingService,
@@ -17,8 +17,8 @@ export class PromotionBriefingController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Listar Briefing de Promoção' })
-  @ApiResponse({ status: 200, description: 'Briefing de Promoção listado com sucesso' })
+  @ApiOperation({ summary: 'Listar Briefing de Divulgação e Detalhamento' })
+  @ApiResponse({ status: 200, description: 'Briefing de Divulgação e Detalhamento listado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findOne(@Param('event_id') event_id: string, @Req() req: any) {
@@ -31,8 +31,8 @@ export class PromotionBriefingController {
 
   @Put()
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Editar Briefing de Promoção' })
-  @ApiResponse({ status: 200, description: 'Briefing de Promoção editado com sucesso' })
+  @ApiOperation({ summary: 'Editar Briefing de Divulgação e Detalhamento' })
+  @ApiResponse({ status: 200, description: 'Briefing de Divulgação e Detalhamento editado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async update(

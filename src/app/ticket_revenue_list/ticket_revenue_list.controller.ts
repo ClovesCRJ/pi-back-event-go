@@ -8,7 +8,7 @@ import { UpdateTicketRevenueListDto } from './dto/update-ticket_revenue_list.dto
 import { TicketRevenueListService } from './ticket_revenue_list.service';
 
 @Controller('/api/v1/events/:event_id/ticket-revenue-lists')
-@ApiTags('Ticket Revenue List')
+@ApiTags('Categorias de Receitas de Ingressos')
 export class TicketRevenueListController {
   constructor(
     private readonly ticketRevenueListService: TicketRevenueListService,
@@ -18,9 +18,10 @@ export class TicketRevenueListController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Criar Categoria de Receitas de Ingressos' })
-  @ApiResponse({ status: 200, description: 'Categoria de Receitas de Ingressos criada com sucesso' })
+  @ApiResponse({ status: 201, description: 'Categoria de Receitas de Ingressos criada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name)' })
   async create(
     @Param('event_id') event_id: string,
     @Req() req: any,
@@ -77,6 +78,7 @@ export class TicketRevenueListController {
   @ApiResponse({ status: 200, description: 'Categoria de Receitas de Ingressos editada com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Categoria de Receitas de Ingressos não encontrados' })
+  @ApiResponse({ status: 400, description: 'Atributos inválidos (name)' })
   async update(
     @Param('event_id') event_id: string,
     @Param('ticket_revenue_list_id') ticket_revenue_list_id: string,
@@ -97,7 +99,7 @@ export class TicketRevenueListController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remover Categoria de Receitas de Ingressos' })
-  @ApiResponse({ status: 200, description: 'Categoria de Receitas de Ingressos removida com sucesso' })
+  @ApiResponse({ status: 204, description: 'Categoria de Receitas de Ingressos removida com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento ou Categoria de Receitas de Ingressos não encontrados' })
   async remove(
