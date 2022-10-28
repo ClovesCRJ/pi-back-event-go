@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { UserPermissionService } from './user_permission.service';
 import { UserPermissionController } from './user_permission.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,7 +9,7 @@ import { UserModule } from '../user/user.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserPermission]),
-    EventModule,
+    forwardRef(() => EventModule),
     UserModule,
   ],
   controllers: [UserPermissionController],

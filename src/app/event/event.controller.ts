@@ -9,6 +9,7 @@ import { PromotionBriefingService } from '../promotion_briefing/promotion_briefi
 import { PublicBriefingService } from '../public_briefing/public_briefing.service';
 import { StrategyBriefingService } from '../strategy_briefing/strategy_briefing.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserPermissionService } from '../user_permission/user_permission.service';
 
 @Controller('api/v1/events')
 @ApiTags('Eventos')
@@ -22,6 +23,7 @@ export class EventController {
     private readonly promotionBriefingService: PromotionBriefingService,
     private readonly publicBriefingService: PublicBriefingService,
     private readonly strategyBriefingService: StrategyBriefingService,
+    private readonly userPermissionService: UserPermissionService,
   ) {}
 
   @Post()
@@ -47,10 +49,35 @@ export class EventController {
       promotion_briefing_id: promotionBriefing.id,
     });
     
-    return await this.eventService.create({
+    const event = await this.eventService.create({
       briefing_id: briefing.id,
       owner_id: req.user.id,
     });
+
+    await this.userPermissionService.create({
+      event_id: event.id,
+      user_email: req.user.email,
+      briefing_read: true,
+      briefing_write: true,
+      check_list_read: true,
+      check_list_write: true,
+      costs_read: true,
+      costs_write: true,
+      ticket_revenue_read: true,
+      ticket_revenue_write: true,
+      event_revenue_read: true,
+      event_revenue_write: true,
+      finance_read: true,
+      finance_write: true,
+      booking_read: true,
+      booking_write: true,
+      tickets_list_read: true,
+      tickets_list_write: true,
+      annotation_read: true,
+      annotation_write: true,
+    }, req.user.id);
+
+    return event;
   }
 
   @Get()

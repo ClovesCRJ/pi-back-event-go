@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { EventService } from './event.service';
 import { EventController } from './event.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import { MarketingBriefingModule } from '../marketing_briefing/marketing_briefin
 import { PromotionBriefingModule } from '../promotion_briefing/promotion_briefing.module';
 import { PublicBriefingModule } from '../public_briefing/public_briefing.module';
 import { StrategyBriefingModule } from '../strategy_briefing/strategy_briefing.module';
+import { UserPermissionModule } from '../user_permission/user_permission.module';
 
 @Module({
   // TODO: Includes Removal of CheckList, CostLIst, TIcketRevenuesList, EventRevenues, CashInFlow and CashOutFlow.
@@ -20,6 +21,7 @@ import { StrategyBriefingModule } from '../strategy_briefing/strategy_briefing.m
     PromotionBriefingModule,
     PublicBriefingModule,
     StrategyBriefingModule,
+    forwardRef(() => UserPermissionModule),
   ],
   controllers: [EventController],
   providers: [EventService],
