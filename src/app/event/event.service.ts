@@ -24,7 +24,7 @@ export class EventService {
         where: { owner_id },
       });
     } catch (error) {
-      return new InternalServerErrorException(error.message);
+      throw new InternalServerErrorException(error.message);
     }
   }
 
