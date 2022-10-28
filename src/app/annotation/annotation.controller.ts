@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, 
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
+import { UserPermissionService } from '../user_permission/user_permission.service';
 import { AnnotationService } from './annotation.service';
 import { CreateAnnotationDto } from './dto/create-annotation.dto';
 import { UpdateAnnotationDto } from './dto/update-annotation.dto';
@@ -12,6 +13,7 @@ export class AnnotationController {
   constructor(
     private readonly annotationService: AnnotationService,
     private readonly eventService: EventService,
+    private readonly userPermissionService: UserPermissionService,
   ) {}
 
   @Post()
@@ -26,8 +28,11 @@ export class AnnotationController {
     @Req() req: any,
     @Body() createAnnotationDto: CreateAnnotationDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, annotation_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.annotationService.create(event.id, createAnnotationDto);
   }
@@ -42,8 +47,11 @@ export class AnnotationController {
     @Param('event_id') event_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, annotation_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.annotationService.findAll(event.id);
   }
@@ -59,8 +67,11 @@ export class AnnotationController {
     @Param('annotation_id') annotation_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, annotation_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.annotationService.findOne({
       where: { id: annotation_id, event_id: event.id },
@@ -80,8 +91,11 @@ export class AnnotationController {
     @Req() req: any,
     @Body() updateAnnotationDto: UpdateAnnotationDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, annotation_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.annotationService.update(
       event.id,
@@ -102,8 +116,11 @@ export class AnnotationController {
     @Param('annotation_id') annotation_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, annotation_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.annotationService.remove(event.id, annotation_id);
   }

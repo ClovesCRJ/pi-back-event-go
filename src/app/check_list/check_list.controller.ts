@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CheckItemService } from '../check_item/check_item.service';
 import { EventService } from '../event/event.service';
+import { UserPermissionService } from '../user_permission/user_permission.service';
 import { CheckListService } from './check_list.service';
 import { CreateCheckListDto } from './dto/create-check_list.dto';
 import { UpdateCheckListDto } from './dto/update-check_list.dto';
@@ -13,6 +14,7 @@ export class CheckListController {
   constructor(
     private readonly checkListService: CheckListService,
     private readonly eventService: EventService,
+    private readonly userPermissionService: UserPermissionService,
   ) {}
 
   @Post()
@@ -27,8 +29,11 @@ export class CheckListController {
     @Req() req: any,
     @Body() createCheckListDto: CreateCheckListDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, check_list_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.checkListService.create(event.id, createCheckListDto);
   }
@@ -43,8 +48,11 @@ export class CheckListController {
     @Param('event_id') event_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, check_list_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.checkListService.findAll(event.id);
   }
@@ -60,8 +68,11 @@ export class CheckListController {
     @Param('check_list_id') check_list_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, check_list_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.checkListService.findOne({
       relations: ["check_items"],
@@ -82,8 +93,11 @@ export class CheckListController {
     @Req() req: any,
     @Body() updateCheckListDto: UpdateCheckListDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, check_list_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.checkListService.update(
       event.id,
@@ -104,8 +118,11 @@ export class CheckListController {
     @Param('check_list_id') check_list_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, check_list_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const check_list = await this.checkListService.findOne({
       relations: ["check_items"],

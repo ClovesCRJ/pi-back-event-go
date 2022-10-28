@@ -2,6 +2,7 @@ import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookingListModule } from '../booking_list/booking_list.module';
 import { EventModule } from '../event/event.module';
+import { UserPermissionModule } from '../user_permission/user_permission.module';
 import { BookingItemController } from './booking_item.controller';
 import { BookingItemService } from './booking_item.service';
 import { BookingItem } from './entities/booking_item.entity';
@@ -11,6 +12,7 @@ import { BookingItem } from './entities/booking_item.entity';
     TypeOrmModule.forFeature([BookingItem]),
     EventModule,
     BookingListModule,
+    UserPermissionModule,
   ],
   exports: [BookingItemService],
   controllers: [BookingItemController],

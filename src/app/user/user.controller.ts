@@ -35,27 +35,30 @@ export class UserController {
     });
   }
 
-  @Patch(':id')
+  @Patch()
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Editar usuário' })
   @ApiResponse({ status: 204, description: 'Usuário editado com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Usuário não encontrado' })
-  async update(@Param('id', new ParseUUIDPipe) id: string, @Body() updateUserDto: UpdateUserDto) {
-    // TODO: Check if is the same user logged
-    return await this.userService.update(id, updateUserDto);
+  async update(
+    @Body() updateUserDto: UpdateUserDto,
+    @Req() req: any,
+  ) {
+    return await this.userService.update(req.user.id, updateUserDto);
   }
 
-  @Delete(':id')
+  @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Remover usuário' })
   @ApiResponse({ status: 204, description: 'Usuário removido com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Usuário não encontrado' })
-  async remove(@Param('id', new ParseUUIDPipe) id: string) {
-    // TODO: Check if is the same user logged
-    return await this.userService.remove(id);
+  async remove(
+    @Req() req: any,
+  ) {
+    return await this.userService.remove(req.user.id);
   }
 }

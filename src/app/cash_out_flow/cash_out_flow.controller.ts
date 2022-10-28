@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, 
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
+import { UserPermissionService } from '../user_permission/user_permission.service';
 import { CashOutFlowService } from './cash_out_flow.service';
 import { CreateCashOutFlowDto } from './dto/create-cash_out_flow.entity';
 import { UpdateCashOutFlowDto } from './dto/update-cash_out_flow.entity';
@@ -12,6 +13,7 @@ export class CashOutFlowController {
   constructor(
     private readonly cashOutFlowService: CashOutFlowService,
     private readonly eventService: EventService,
+    private readonly userPermissionService: UserPermissionService,
   ) {}
 
   @Post()
@@ -26,8 +28,11 @@ export class CashOutFlowController {
     @Req() req: any,
     @Body() createCashOutFlowDto: CreateCashOutFlowDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, finance_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.cashOutFlowService.create(event.id, createCashOutFlowDto);
   }
@@ -42,8 +47,11 @@ export class CashOutFlowController {
     @Param('event_id') event_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, finance_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.cashOutFlowService.findAll(event.id);
   }
@@ -59,8 +67,11 @@ export class CashOutFlowController {
     @Param('cash_out_flow_id') cash_out_flow_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, finance_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.cashOutFlowService.findOne({
       where: { id: cash_out_flow_id, event_id: event.id },
@@ -80,8 +91,11 @@ export class CashOutFlowController {
     @Req() req: any,
     @Body() updateCashOutFlowDto: UpdateCashOutFlowDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, finance_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.cashOutFlowService.update(
       event.id,
@@ -102,8 +116,11 @@ export class CashOutFlowController {
     @Param('cash_out_flow_id') cash_out_flow_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, finance_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.cashOutFlowService.remove(event.id, cash_out_flow_id);
   }

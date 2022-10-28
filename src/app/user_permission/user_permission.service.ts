@@ -20,6 +20,13 @@ export class UserPermissionService {
     });
   }
 
+  async findAllBelong(user_id: string) {
+    return await this.userPermissionRepository.find({
+      where: { user_id },
+      relations: ["event", "event.briefing"]
+    });
+  }
+
   async findOne(options: FindOneOptions<UserPermission>) {
     try {
       return await this.userPermissionRepository.findOneOrFail(options);

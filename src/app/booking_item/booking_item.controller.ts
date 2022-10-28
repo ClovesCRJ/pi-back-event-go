@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BookingListService } from '../booking_list/booking_list.service';
 import { EventService } from '../event/event.service';
+import { UserPermissionService } from '../user_permission/user_permission.service';
 import { BookingItemService } from './booking_item.service';
 import { CreateBookingItemDto } from './dto/create-booking_item.dto';
 import { UpdateBookingItemDto } from './dto/update-booking_item.dto';
@@ -14,6 +15,7 @@ export class BookingItemController {
     private readonly bookingItemService: BookingItemService,
     private readonly eventService: EventService,
     private readonly bookingListService: BookingListService,
+    private readonly userPermissionService: UserPermissionService,
   ) {}
 
   @Get()
@@ -27,8 +29,11 @@ export class BookingItemController {
     @Param('booking_list_id') booking_list_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, booking_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const booking_list = await this.bookingListService.findOne({
       where: { id: booking_list_id, event_id: event.id },
@@ -49,8 +54,11 @@ export class BookingItemController {
     @Req() req: any,
     @Body() createBookingItemDto: CreateBookingItemDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, booking_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const booking_list = await this.bookingListService.findOne({
       where: { id: booking_list_id, event_id: event.id },
@@ -70,8 +78,11 @@ export class BookingItemController {
     @Param('booking_item_id') booking_item_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, booking_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const booking_list = await this.bookingListService.findOne({
       where: { id: booking_list_id, event_id: event.id },
@@ -95,8 +106,11 @@ export class BookingItemController {
     @Req() req: any,
     @Body() updateBookingItemDto: UpdateBookingItemDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, booking_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const booking_list = await this.bookingListService.findOne({
       where: { id: booking_list_id, event_id: event.id },
@@ -121,8 +135,11 @@ export class BookingItemController {
     @Param('booking_item_id') booking_item_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, booking_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const booking_list = await this.bookingListService.findOne({
       where: { id: booking_list_id, event_id: event.id },

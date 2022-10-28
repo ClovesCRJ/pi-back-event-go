@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CostItemService } from '../cost_item/cost_item.service';
 import { EventService } from '../event/event.service';
+import { UserPermissionService } from '../user_permission/user_permission.service';
 import { CostListService } from './cost_list.service';
 import { CreateCostListDto } from './dto/create-cost_list.dto';
 import { UpdateCostListDto } from './dto/update-cost_list.dto';
@@ -13,6 +14,7 @@ export class CostListController {
   constructor(
     private readonly costListService: CostListService,
     private readonly eventService: EventService,
+    private readonly userPermissionService: UserPermissionService,
   ) {}
 
   @Post()
@@ -27,8 +29,11 @@ export class CostListController {
     @Req() req: any,
     @Body() createCostListDto: CreateCostListDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.costListService.create(event.id, createCostListDto);
   }
@@ -43,8 +48,11 @@ export class CostListController {
     @Param('event_id') event_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.costListService.findAll(event.id);
   }
@@ -60,8 +68,11 @@ export class CostListController {
     @Param('cost_list_id') cost_list_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.costListService.findOne({
       relations: ["cost_items"],
@@ -82,8 +93,11 @@ export class CostListController {
     @Req() req: any,
     @Body() updateCostListDto: UpdateCostListDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.costListService.update(
       event.id,
@@ -104,8 +118,11 @@ export class CostListController {
     @Param('cost_list_id') cost_list_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const cost_list = await this.costListService.findOne({
       relations: ["cost_items"],

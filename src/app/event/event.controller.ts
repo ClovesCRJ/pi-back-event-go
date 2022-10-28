@@ -96,9 +96,12 @@ export class EventController {
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findOne(@Param('id') id: string, @Req() req: any, @Query('relations') relations: any) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id: id, user_id: req.user.id }
+    });
     return await this.eventService.findOneBelong({
       relations,
-      where: { id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
   }
 

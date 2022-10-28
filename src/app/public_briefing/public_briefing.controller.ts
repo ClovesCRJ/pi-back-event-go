@@ -6,6 +6,7 @@ import { EventModule } from '../event/event.module';
 import { EventService } from '../event/event.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserPermissionService } from '../user_permission/user_permission.service';
 
 @Controller('/api/v1/events/:event_id/public-briefing')
 @ApiTags('Briefing de Público')
@@ -14,6 +15,7 @@ export class PublicBriefingController {
     private readonly publicBriefingService: PublicBriefingService,
     @Inject(forwardRef(() => EventService))
     private readonly eventService: EventService,
+    private readonly userPermissionService: UserPermissionService,
   ) {}
 
   @Get()
@@ -23,9 +25,12 @@ export class PublicBriefingController {
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   @ApiResponse({ status: 404, description: 'Evento não encontrado' })
   async findOne(@Param('event_id') event_id: string, @Req() req: any) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, briefing_read: true }
+    });
     const event = await this.eventService.findOneBelong({
       relations: ["briefing.public_briefing"],
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return event.briefing.public_briefing;
   }
@@ -41,9 +46,12 @@ export class PublicBriefingController {
     @Body() updatePublicBriefingDto: UpdatePublicBriefingDto,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, briefing_write: true }
+    });
     const event = await this.eventService.findOneBelong({
       relations: ["briefing.public_briefing"],
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return this.publicBriefingService.update(
       event.briefing.public_briefing_id,

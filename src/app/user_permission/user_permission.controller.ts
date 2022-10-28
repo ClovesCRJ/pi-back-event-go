@@ -18,9 +18,9 @@ export class UserPermissionController {
     private readonly userService: UserService,
   ) {}
 
-  @Get()
+  @Get('/granted')
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Listar Permissões de Usuário' })
+  @ApiOperation({ summary: 'Listar Permissões de Usuário Concedidas' })
   @ApiResponse({ status: 200, description: 'Permissões de Usuário listadas com sucesso' })
   @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
   async findAll(
@@ -30,6 +30,18 @@ export class UserPermissionController {
     const userPermissions = await this.userPermissionService.findAll([
       ...events.map((event) => event.id),
     ]);
+    return userPermissions;
+  }
+
+  @Get('/received')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Permissões de Usuário Recebidas' })
+  @ApiResponse({ status: 200, description: 'Permissões de Usuário listadas com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  async findAllBelong(
+    @Req() req: any,
+  ) {
+    const userPermissions = await this.userPermissionService.findAllBelong(req.user.id);
     return userPermissions;
   }
 

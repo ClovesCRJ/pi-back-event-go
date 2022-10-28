@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, 
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EventService } from '../event/event.service';
+import { UserPermissionService } from '../user_permission/user_permission.service';
 import { CreateEventRevenueDto } from './dto/create-event_revenue.dto';
 import { UpdateEventRevenueDto } from './dto/update-event_revenue.dto';
 import { EventRevenueService } from './event_revenue.service';
@@ -12,6 +13,7 @@ export class EventRevenueController {
   constructor(
     private readonly eventRevenueService: EventRevenueService,
     private readonly eventService: EventService,
+    private readonly userPermissionService: UserPermissionService,
   ) {}
 
   @Post()
@@ -26,8 +28,11 @@ export class EventRevenueController {
     @Req() req: any,
     @Body() createEventRevenueDto: CreateEventRevenueDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, event_revenue_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.eventRevenueService.create(event.id, createEventRevenueDto);
   }
@@ -42,8 +47,11 @@ export class EventRevenueController {
     @Param('event_id') event_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, event_revenue_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.eventRevenueService.findAll(event.id);
   }
@@ -59,8 +67,11 @@ export class EventRevenueController {
     @Param('event_revenue_id') event_revenue_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, event_revenue_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.eventRevenueService.findOne({
       where: { id: event_revenue_id, event_id: event.id },
@@ -80,8 +91,11 @@ export class EventRevenueController {
     @Req() req: any,
     @Body() updateEventRevenueDto: UpdateEventRevenueDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, event_revenue_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.eventRevenueService.update(
       event.id,
@@ -102,8 +116,11 @@ export class EventRevenueController {
     @Param('event_revenue_id') event_revenue_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, event_revenue_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     return await this.eventRevenueService.remove(event.id, event_revenue_id);
   }

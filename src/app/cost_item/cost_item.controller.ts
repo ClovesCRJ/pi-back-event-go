@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CostListService } from '../cost_list/cost_list.service';
 import { EventService } from '../event/event.service';
+import { UserPermissionService } from '../user_permission/user_permission.service';
 import { CostItemService } from './cost_item.service';
 import { CreateCostItemDto } from './dto/create-cost_item.dto';
 import { UpdateCostItemDto } from './dto/update-cost_item.dto';
@@ -14,6 +15,7 @@ export class CostItemController {
     private readonly costItemService: CostItemService,
     private readonly eventService: EventService,
     private readonly costListService: CostListService,
+    private readonly userPermissionService: UserPermissionService,
   ) {}
 
   @Get()
@@ -27,8 +29,11 @@ export class CostItemController {
     @Param('cost_list_id') cost_list_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const cost_list = await this.costListService.findOne({
       where: { id: cost_list_id, event_id: event.id },
@@ -49,8 +54,11 @@ export class CostItemController {
     @Req() req: any,
     @Body() createCostItemDto: CreateCostItemDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const cost_list = await this.costListService.findOne({
       where: { id: cost_list_id, event_id: event.id },
@@ -70,8 +78,11 @@ export class CostItemController {
     @Param('cost_item_id') cost_item_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_read: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const cost_list = await this.costListService.findOne({
       where: { id: cost_list_id, event_id: event.id },
@@ -95,8 +106,11 @@ export class CostItemController {
     @Req() req: any,
     @Body() updateCostItemDto: UpdateCostItemDto,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const cost_list = await this.costListService.findOne({
       where: { id: cost_list_id, event_id: event.id },
@@ -121,8 +135,11 @@ export class CostItemController {
     @Param('cost_item_id') cost_item_id: string,
     @Req() req: any,
   ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_write: true }
+    });
     const event = await this.eventService.findOneBelong({
-      where: { id: event_id, owner_id: req.user.id },
+      where: { id: permission.event_id },
     });
     const cost_list = await this.costListService.findOne({
       where: { id: cost_list_id, event_id: event.id },
