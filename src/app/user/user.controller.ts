@@ -4,18 +4,23 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('api/v1/users')
 @ApiTags('Usuários')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Criar usuário com email e senha' })
   @ApiResponse({ status: 201, description: 'Usuário criado com sucesso' })
   @ApiResponse({ status: 400, description: 'Atributos inválidos (senha, email, first_name ou last_name' })
   async create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+    const user = await this.userService.create(createUserDto);
+    return await this.authService.login(user);
   }
 
   // @Get()
