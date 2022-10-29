@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MessagesUtils } from 'src/utils/messages.utils';
 import { FindOneOptions, Repository } from 'typeorm';
+import { CreateUserWithGoogleDto } from './dto/create-user-with-google.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -16,6 +17,14 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.usersRepository.create(createUserDto);
+    return await this.usersRepository.save(user);
+  }
+
+  async createWithGoogle(createUserWithGoogleDto: CreateUserWithGoogleDto) {
+    const user = await this.usersRepository.create({
+      ...createUserWithGoogleDto,
+      isRegisteredWithGoogle: true,
+    });
     return await this.usersRepository.save(user);
   }
 

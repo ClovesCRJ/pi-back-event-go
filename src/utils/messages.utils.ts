@@ -19,6 +19,8 @@ const ANNOTATION_NOT_FOUND = "A annotation não existe";
 const BRIEFING_NOT_FOUND = "O briefing não existe";
 const USER_PERMISSION_NOT_FOUND = "A user permission não existe";
 const USER_PERMISSION_ALREADY_EXISTS = "A user permission já existe";
+const USE_EMAIL_AND_PASSWORD = "Utilize email e senha para logar";
+const USE_GOOGLE = "Utilize o 'Entrar com o Google' para logar";
 
 export const MessagesUtils = {
   PASSWORD_VALID,
@@ -41,5 +43,7 @@ export const MessagesUtils = {
   ANNOTATION_NOT_FOUND,
   USER_PERMISSION_NOT_FOUND,
   USER_PERMISSION_ALREADY_EXISTS,
-  BRIEFING_NOT_FOUND
+  BRIEFING_NOT_FOUND,
+  USE_EMAIL_AND_PASSWORD,
+  USE_GOOGLE,
 }

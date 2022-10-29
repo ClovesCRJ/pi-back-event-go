@@ -2,6 +2,7 @@ import { Event } from "../../event/entities/event.entity";
 import { UserPermission } from "../../user_permission/entities/user_permission.entity";
 import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { hashSync } from "bcrypt";
+import { Exclude } from "class-transformer";
 
 @Entity("users")
 export class User {
@@ -27,8 +28,12 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
+  @Exclude()
   password: string;
+
+  @Column({ default: false })
+  isRegisteredWithGoogle: boolean;
 
   @CreateDateColumn()
   created_at: Date;
@@ -41,6 +46,6 @@ export class User {
 
   @BeforeInsert()
   hashPassword() {
-    this.password = hashSync(this.password, 10);
+    if (this.password) this.password = hashSync(this.password, 10);
   }
 }
