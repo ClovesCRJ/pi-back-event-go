@@ -57,6 +57,48 @@ export class TicketListController {
     return await this.ticketListService.findAll(event.id);
   }
 
+  @Get('total')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Categorias de Ingressos' })
+  @ApiResponse({ status: 200, description: 'Categorias de Ingressos listadas com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  async findTotal(
+    @Param('event_id') event_id: string,
+    @Req() req: any,
+  ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, tickets_list_read: true }
+    });
+    const event = await this.eventService.findOneBelong({
+      where: { id: permission.event_id },
+    });
+    const ticketLists = await this.ticketListService.findAll(event.id);
+    
+    let totalRevenue = 0;
+    let totalAmount = 0;
+    let ticketsSales = [];
+
+    ticketLists.forEach((ticketList) => {
+      let total_type = 0;
+      ticketList.ticket_items.forEach(ticketItem => {
+        totalRevenue += ticketItem.sale_value * ticketItem.quantity_sold;
+        totalAmount += ticketItem.quantity_sold;
+        total_type += ticketItem.quantity_sold;
+      });
+      ticketsSales.push({
+        ticket_type: ticketList.name,
+        ticket_amount: total_type,
+      });
+    });
+    
+    return {
+      total_revenue: totalRevenue,
+      total_amount: totalAmount,
+      tickets_sales: ticketsSales,
+    };
+  }
+
   @Get(':ticket_list_id')
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Listar Categoria de Ingressos' })

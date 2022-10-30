@@ -60,6 +60,40 @@ export class TicketRevenueListController {
     return await this.ticketRevenueListService.findAll(event.id);
   }
 
+  @Get('total')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Total de Receitas de Ingressos' })
+  @ApiResponse({ status: 200, description: 'Total de Receitas de Ingressos listado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  async findTotal(
+    @Param('event_id') event_id: string,
+    @Req() req: any,
+  ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, ticket_revenue_read: true }
+    });
+    const event = await this.eventService.findOneBelong({
+      where: { id: permission.event_id },
+    });
+    const ticketRevenueLists =  await this.ticketRevenueListService.findAll(event.id);
+
+    let total_quantity = 0;
+    let total_value = 0;
+
+    ticketRevenueLists.forEach((ticketRevenueList) => {
+      ticketRevenueList.ticket_revenues.forEach(ticketRevenue => {
+        total_quantity += ticketRevenue.quantity;
+        total_value += ticketRevenue.value_unit * ticketRevenue.quantity;
+      });
+    });
+
+    return {
+      total_quantity,
+      total_value,
+    };
+  }
+
   @Get(':ticket_revenue_list_id')
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Listar Categoria de Receitas de Ingressos' })

@@ -55,6 +55,36 @@ export class EventRevenueController {
     });
     return await this.eventRevenueService.findAll(event.id);
   }
+  
+
+  @Get('total')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Total de Receitas de Evento' })
+  @ApiResponse({ status: 200, description: 'Total de Receitas de Evento listadas com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  async findTotal(
+    @Param('event_id') event_id: string,
+    @Req() req: any,
+  ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, event_revenue_read: true }
+    });
+    const event = await this.eventService.findOneBelong({
+      where: { id: permission.event_id },
+    });
+    const eventRevenues = await this.eventRevenueService.findAll(event.id);
+
+    let total = 0;
+
+    eventRevenues.forEach((eventRevenue) => {
+      total += eventRevenue.quantity * eventRevenue.value_unit;
+    })
+
+    return {
+      total_event_revenues: total
+    };
+  }
 
   @Get(':event_revenue_id')
   @UseGuards(AuthGuard('jwt'))

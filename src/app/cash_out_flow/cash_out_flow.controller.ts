@@ -56,6 +56,35 @@ export class CashOutFlowController {
     return await this.cashOutFlowService.findAll(event.id);
   }
 
+  @Get('total')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Total de Saídas de Caixa' })
+  @ApiResponse({ status: 200, description: 'Total de Saídas de Caixa listado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  async findTotal(
+    @Param('event_id') event_id: string,
+    @Req() req: any,
+  ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, finance_read: true }
+    });
+    const event = await this.eventService.findOneBelong({
+      where: { id: permission.event_id },
+    });
+    const cashOutFlows = await this.cashOutFlowService.findAll(event.id);
+
+    let total = 0;
+
+    cashOutFlows.forEach((cashOutFlow) => {
+      total += cashOutFlow.amount;
+    });
+
+    return {
+      total_cash_out: total,
+    };
+  }
+
   @Get(':cash_out_flow_id')
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Listar Saída de Caixa' })

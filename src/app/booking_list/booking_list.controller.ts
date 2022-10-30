@@ -57,6 +57,42 @@ export class BookingListController {
     return await this.bookingListService.findAll(event.id);
   }
 
+  @Get('total')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Total de Reservas' })
+  @ApiResponse({ status: 200, description: 'Total de Reservas listadas com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  async findTotal(
+    @Param('event_id') event_id: string,
+    @Req() req: any,
+  ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, booking_read: true }
+    });
+    const event = await this.eventService.findOneBelong({
+      where: { id: permission.event_id },
+    });
+    const bookingLists = await this.bookingListService.findAll(event.id);
+
+    let total = 0;
+    let totalBooked = 0;
+
+    bookingLists.forEach((bookingList) => {
+      bookingList.booking_items.forEach(bookingItem => {
+        if (bookingItem.name && bookingItem.name.length > 0) {
+          totalBooked += 1;
+        }
+        total += 1;
+      });
+    });
+
+    return {
+      total_bookings: totalBooked,
+      total_amount: total,
+    };
+  }
+
   @Get(':booking_list_id')
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Listar Lista de Reservas' })

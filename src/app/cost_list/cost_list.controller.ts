@@ -57,6 +57,37 @@ export class CostListController {
     return await this.costListService.findAll(event.id);
   }
 
+  @Get('total')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Listar Total de Custos' })
+  @ApiResponse({ status: 200, description: 'Total de Custos listados com sucesso' })
+  @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+  @ApiResponse({ status: 404, description: 'Evento não encontrado' })
+  async findTotal(
+    @Param('event_id') event_id: string,
+    @Req() req: any,
+  ) {
+    const permission = await this.userPermissionService.findOne({
+      where: { event_id, user_id: req.user.id, costs_read: true }
+    });
+    const event = await this.eventService.findOneBelong({
+      where: { id: permission.event_id },
+    });
+    const costLists = await this.costListService.findAll(event.id);
+    
+    let total = 0;
+
+    costLists.forEach((costList) => {
+      costList.cost_items.forEach(costItem => {
+        total += costItem.quantity * costItem.value;
+      });
+    });
+    
+    return {
+      total_costs: total
+    };
+  }
+
   @Get(':cost_list_id')
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Listar Categoria de Custos' })
