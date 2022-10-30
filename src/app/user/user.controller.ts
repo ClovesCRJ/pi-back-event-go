@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, HttpCode, HttpStatus, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, HttpCode, HttpStatus, UseGuards, Req, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -40,7 +40,7 @@ export class UserController {
     });
   }
 
-  @Patch()
+  @Put()
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Editar usuário' })
