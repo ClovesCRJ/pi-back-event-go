@@ -38,6 +38,9 @@ import { AnnotationModule } from './app/annotation/annotation.module';
       database: process.env.TYPEORM_DATABASE,
       entities: [__dirname + "/**/entities/*.entity{.js,.ts}"],
       synchronize: true,
+      extra: {
+        ssl: true
+      }
     } as TypeOrmModuleOptions),
     UserModule,
     EventModule,
